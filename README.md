@@ -7,28 +7,34 @@ Human Activity Recognition (HAR) using smartphones Data Set analysis
 
 An exciting area in Data Science is Wearable Computing - see for example this [article from Inside Activity Tracking](http://www.insideactivitytracking.com/data-science-activity-tracking-and-the-battle-for-the-worlds-top-sports-brand/). Companies like [Fitbit](https://www.fitbit.com/), [Nike](http://www.nike.com/), [Jawbone Up](https://jawbone.com/up), [Strava](https://www.strava.com/), and many others are racing to develop the most advanced algorithms to attract new users.
 
-The purpose of this project is to collect, tidy, filter and make some statistics of the HAR data set, producing a new tidy data set.
+The purpose of this project is to collect, tidy, filter and produce some statistics of the HAR data set, producing a new tidy data set.
 
-The data set used in the project is the University of California Irvine (UCI) Machine Learning Repository: Human Activity Recognition Using Smartphones Data Set Version 1.0. The data set represent data collected from the embedded accelerometer and gyroscope of the Samsung Galaxy S smartphone. A full description is available at:
+The data set used in the project is from the University of California Irvine (UCI) Machine Learning Repository: Human Activity Recognition Using Smartphones Data Set Version 1.0. The data set represent data collected from the embedded accelerometer and gyroscope of the Samsung Galaxy S smartphone. A full description is available at:
 
 <http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones>
 
 The data set for the project:
 
-Mirror: <https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip> Original: <http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip>
+Mirror:
+<https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip>
+Original:
+<http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip>
 
 About this README:
 ------------------
 
 This document is an explanation about the Github repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) and its containing project files developed for the course [Getting and Cleaning Data](https://www.coursera.org/learn/data-cleaning/) of the [Data Science Specialization](https://www.coursera.org/specializations/jhu-data-science) from [John Hopkins University](https://www.jhu.edu/) powered by [Coursera](https://www.coursera.org/)
 
-This repository includes the following files:
----------------------------------------------
+The repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) includes the following files:
+-----------------------------------------------------------------------------------------------------------
 
--   `README.md` - This README markdown file,
--   `CodeBook.md` - A code book markdown file that indicate all the variables and summaries calculated, along with units, and any other relevant information about the output file `tidyDataSet.txt`
--   `run_analysis.R` - R script to perform the data download, tidying and analysis required by the project.
--   `tidyDataSet.txt` - Tidy data set output from `run_analysis.R`, containing the the average of each mean and standard deviation variable for each activity and each subject. Specific details about the data are found in is dictionary `CodeBook.md` .
+-   [README.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/README.md) - This README file.
+
+-   [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md) - A code book markdown file that indicate all the variables and summaries calculated, along with units, and any other relevant information about the output file [tidyDataSet.txt](https://github.com/mauriciocramos/HAR-analysis/blob/master/tidyDataSet.txt)
+
+-   [run\_analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) - R script to perform the data download, tidying and analysis required by the project.
+
+-   [tidyDataSet.txt](https://github.com/mauriciocramos/HAR-analysis/blob/master/tidyDataSet.txt) - Tidy data set output from [run\_analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R), containing the the average of each mean and standard deviation variable for each activity and each subject. Specific details about the data are found in its dictionary [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md).
 
 General information about the environment used
 ----------------------------------------------
@@ -65,8 +71,8 @@ R packages used beyond the R defaults `{base}`, `{utils}`, `{stat}`:
 
 `{tidyr}` (Windows binary r-relase: [tidyr\_0.6.0](https://cran.r-project.org/bin/windows/contrib/3.3/tidyr_0.6.0.zip))
 
-The run\_analysis.R script
---------------------------
+The [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script
+--------------------------------------------------------------------------------------------------------
 
 To run this script, just save it in some working directory, open `R` or `RStudio`, go to that directory and run it with the following command:
 
@@ -159,7 +165,7 @@ The current working directory path is saved to build the path names to the neces
 basedir <- getwd()
 ```
 
-The script loads three groups os data sets tied-up with the subdirectory structure: General, Training sets and Testing data sets. All eight data set files area loaded into R `data.frame` objects.
+The script loads three groups os data sets tied-up with the subdirectory structure: General, Training sets and Testing data sets as selected in the [CodeBook](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md). All eight data set files area loaded into R `data.frame` objects.
 
 Loading the General data sets from directory `./UCI HAR Dataset/`:
 
@@ -267,17 +273,17 @@ Initially, this requirement \#2 was not perfectly clear whether the extraction s
 
 Additional considerations about the feature selection reasoning:
 
-According to the Wikipedia (<https://en.wikipedia.org/wiki/Mean>):
+According to the Wikipedia: [Mean](https://en.wikipedia.org/wiki/Mean):
 
 > In mathematics, mean has several different definitions depending on the context.
 
 > In probability and statistics, mean and expected value are used synonymously to refer to one measure of the central tendency either of a probability distribution or of the random variable characterized by that distribution. In the case of a discrete probability distribution of a random variable X, the mean is equal to the sum over every possible value weighted by the probability of that value
 
-According to the Wikipedia (<https://en.wikipedia.org/wiki/Arithmetic_mean>):
+According to the Wikipedia: [Arithmetic\_mean](https://en.wikipedia.org/wiki/Arithmetic_mean):
 
 > In mathematics and statistics, the arithmetic mean, or simply the mean or average when the context is clear, is the sum of a collection of numbers divided by the number of numbers in the collection.
 
-> Generalizations - Weighted average
+> Generalizations - [Weighted average](https://en.wikipedia.org/wiki/Arithmetic_mean#Weighted_average)
 > A weighted average, or weighted mean, is an average in which some data points count more strongly than others, in that they are given more weight in the calculation.
 
 According to the `features_info.txt` provided by Human Activity Recognition Using Smartphones Dataset Version 1.0, relevant features were found:
@@ -285,11 +291,12 @@ According to the `features_info.txt` provided by Human Activity Recognition Usin
 > The set of variables that were estimated from these signals are:
 > mean(): Mean value
 > std(): Standard deviation
-> (...) meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+> (...)
+> meanFreq(): Weighted average of the frequency components to obtain a mean frequency
 
-According to the "features\_info.txt", there are other vectors that, although means, their respective features are actually `angles`:
+According to the `features_info.txt`, there are other vectors that, although means, their respective features are actually `angles`:
 
-> Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable: gravityMean, tBodyAccMean, tBodyAccJerkMean, tBodyGyroMean, BodyGyroJerkMean".
+> Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable: gravityMean, tBodyAccMean, tBodyAccJerkMean, tBodyGyroMean, BodyGyroJerkMean.
 
 > angle(tBodyAccMean,gravity)
 > angle(tBodyAccJerkMean),gravityMean)
@@ -350,3 +357,10 @@ For the peer evaluation of the tidy data set file `tidyDataSet.txt`:
 ``` r
 View(read.table("tidyDataSet.txt", header = TRUE, stringsAsFactors = FALSE))
 ```
+
+Acknowledgment
+--------------
+
+\[1\] Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013.
+
+This dataset is distributed AS-IS and no responsibility implied or explicit can be addressed to the authors or their institutions for its use or misuse. Any commercial use is prohibited.
