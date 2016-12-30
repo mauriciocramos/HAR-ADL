@@ -23,7 +23,7 @@ Original:
 About this README:
 ------------------
 
-This document is an explanation about the Github repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) and its containing project files developed for the course [Getting and Cleaning Data](https://www.coursera.org/learn/data-cleaning/) of the [Data Science Specialization](https://www.coursera.org/specializations/jhu-data-science) from [John Hopkins University](https://www.jhu.edu/) powered by [Coursera](https://www.coursera.org/)
+This document is an explanation about the Github repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) and its files developed for [John Hopkins University](https://www.jhu.edu/) [Data Science Specialization](https://www.coursera.org/specializations/jhu-data-science). .
 
 The repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) includes the following files:
 -----------------------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ The repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) in
 
 -   [run\_analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) - R script to perform the data download, tidying and analysis required by the project.
 
--   [tidyDataSet.txt](https://github.com/mauriciocramos/HAR-analysis/blob/master/tidyDataSet.txt) - Tidy data set output from [run\_analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R), containing the the average of each mean and standard deviation variable for each activity and each subject. Specific details about the data are found in its dictionary [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md).
+-   [tidyDataSet.txt](https://github.com/mauriciocramos/HAR-analysis/blob/master/tidyDataSet.txt) - Tidy data set output from [run\_analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R), containing the the average of each mean and standard deviation variable for each activity and each subject. Specific details about the data are found in its [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md).
 
 General information about the environment used
 ----------------------------------------------
@@ -74,7 +74,7 @@ R packages used beyond the R defaults `{base}`, `{utils}`, `{stat}`:
 The [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script
 --------------------------------------------------------------------------------------------------------
 
-To run this script, just save it in some working directory, open `R` or `RStudio`, go to that directory and run it with the following command:
+To run this script, save it in some working directory, open `R` or `RStudio`, go to that directory and run it with the following command:
 
 `source("run_analysis.R")`
 
@@ -100,7 +100,7 @@ The R script was developed to fullfill the following formal requirements of the 
 > 4.  Appropriately labels the data set with descriptive variable names.
 > 5.  From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
-Before explaining the solutions developed for the requirements 1 to 2, first it's explained the process to load the required R packages and the HAR data set which consists of multiple directories and files.
+Before explaining the solutions developed for the requirements 1 to 2, first it's explained the required R packages and the loading of the HAR data set files which consists of multiple directories and files.
 
 The `{dplyr}` functions `group_by()` and `summarize()` are used with the function `mean() {base}` to fast and easily calculate the average of all values grouped by `subject`, `activity` and `variable`. It's also used the `{dplyr}` chain operator `"%>%"` to improve the code readability.
 
@@ -125,7 +125,7 @@ The `{tidyr}` function `gather()` is used to take multiple columns and collapses
 library(tidyr)
 ```
 
-The script downloads the zip file `Dataset.zip` into your working directory only once, unless you delete it.
+The script downloads the zip file `Dataset.zip` into your working directory only once, unless you delete it to let the script donwload it again.
 
 ``` r
 url <- 
@@ -134,7 +134,7 @@ destfile = 'Dataset.zip'
 if(!file.exists(destfile)) { download.file(url, destfile) }
 ```
 
-The zip file `Dataset.zip` contains a subdirectory structure and multiple files that the `run_analysis.R` script needs to dealth with. The following command displays the exaclty files the project need to either understand or process:
+The zip file `Dataset.zip` contains a subdirectory structure and multiple files that the `run_analysis.R` script needs to dealth with. The following command displays the necessary files:
 
 ``` r
 unzip(zipfile = "Dataset.zip", list = TRUE)[c(1:5,16:19,30:32),1]
@@ -153,27 +153,33 @@ unzip(zipfile = "Dataset.zip", list = TRUE)[c(1:5,16:19,30:32),1]
     ## [11] "UCI HAR Dataset/train/X_train.txt"      
     ## [12] "UCI HAR Dataset/train/y_train.txt"
 
-The script uncompress the zip file `Dataset.zip` only once into the working directory:
+The script uncompress the zip file `Dataset.zip` into the the folder `UCI HAR Dataset` of the working directory only once, unless you delete this folder to let the script uncompress the zip file again:
 
 ``` r
 if(!dir.exists("UCI HAR Dataset")) { unzip(destfile, setTimes = TRUE) }
 ```
 
-The current working directory path is saved to build the path names to the necessary subdirectories
+The current working directory path is saved to build the path names to the necessary subdirectories during the script execution:
 
 ``` r
 basedir <- getwd()
 ```
 
-The script loads three groups os data sets tied-up with the subdirectory structure: General, Training sets and Testing data sets as selected in the [CodeBook](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md). All eight data set files area loaded into R `data.frame` objects.
+The script loads three groups os data set files tied-up with the subdirectory structure:
 
-Loading the General data sets from directory `./UCI HAR Dataset/`:
+-   General files at `UCI HAR Dataset/`
+-   Training set filest at `UCI HAR Dataset/train/`
+-   Testing set files at `UCI HAR Dataset/test/`
+
+More details about these files are found in the [CodeBook](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md). All eight data set files area loaded into R `data.frame` objects.
+
+Loading the General files from directory `./UCI HAR Dataset/`:
 
 Load the `features.txt`:
 
 ``` r
 features <- read.table(file.path(basedir,"UCI HAR Dataset","features.txt"),
-                       col.names = c("id", "description"),
+                       col.names = c("id", "expression"),
                        stringsAsFactors = FALSE)
 ```
 
@@ -192,7 +198,10 @@ Loading the Trainning data sets from the directory `./UCI HAR Dataset/train`:
 Load the `X_train.txt` file:
 
 ``` r
-X_train <- read.table(file.path(basedir,"UCI HAR Dataset","train","X_train.txt"),
+X_train <- read.table(file.path(basedir,
+                                "UCI HAR Dataset",
+                                "train",
+                                "X_train.txt"),
                       header = FALSE,
                       col.names = 1:561,
                       check.names = FALSE,
@@ -204,9 +213,13 @@ NOTE: The use of the argument `check.names = FALSE` forces the column names of `
 Load `y_train.txt` and `subject_train.txt` files:
 
 ``` r
-y_train <- read.table(file.path(basedir,"UCI HAR Dataset","train","y_train.txt"),
+y_train <- read.table(file.path(basedir,
+                                "UCI HAR Dataset",
+                                "train",
+                                "y_train.txt"),
                       header = FALSE,
                       col.names = "activity")
+
 subject_train <- read.table(file.path(basedir,
                                       "UCI HAR Dataset",
                                       "train",
@@ -220,13 +233,19 @@ Loading the Test data sets from the directory `./UCI HAR Dataset/test`:
 Load the `X_test.txt`, `y_test.txt` and `subject_test.txt` files:
 
 ``` r
-X_test <- read.table(file.path(basedir,"UCI HAR Dataset","test","X_test.txt"),
+X_test <- read.table(file.path(basedir,
+                               "UCI HAR Dataset",
+                               "test",
+                               "X_test.txt"),
                      header = FALSE,
                      col.names = 1:561,
                      check.names = FALSE,
                      colClasses = "numeric")
 
-y_test <- read.table(file.path(basedir,"UCI HAR Dataset","test","y_test.txt"),
+y_test <- read.table(file.path(basedir,
+                               "UCI HAR Dataset",
+                               "test",
+                               "y_test.txt"),
                      header = FALSE,
                      col.names = "activity")
 
@@ -271,21 +290,6 @@ dataset <- gather(dataset,
 
 Initially, this requirement \#2 was not perfectly clear whether the extraction should affect the results of the next requirements. Following a good sense and the discussions in the regarding forums, It is assumed the extraction shall affect the existent tidy dataset.
 
-Additional considerations about the feature selection reasoning:
-
-According to the Wikipedia: [Mean](https://en.wikipedia.org/wiki/Mean):
-
-> In mathematics, mean has several different definitions depending on the context.
-
-> In probability and statistics, mean and expected value are used synonymously to refer to one measure of the central tendency either of a probability distribution or of the random variable characterized by that distribution. In the case of a discrete probability distribution of a random variable X, the mean is equal to the sum over every possible value weighted by the probability of that value
-
-According to the Wikipedia: [Arithmetic\_mean](https://en.wikipedia.org/wiki/Arithmetic_mean):
-
-> In mathematics and statistics, the arithmetic mean, or simply the mean or average when the context is clear, is the sum of a collection of numbers divided by the number of numbers in the collection.
-
-> Generalizations - [Weighted average](https://en.wikipedia.org/wiki/Arithmetic_mean#Weighted_average)
-> A weighted average, or weighted mean, is an average in which some data points count more strongly than others, in that they are given more weight in the calculation.
-
 According to the `features_info.txt` provided by Human Activity Recognition Using Smartphones Dataset Version 1.0, relevant features were found:
 
 > The set of variables that were estimated from these signals are:
@@ -293,6 +297,7 @@ According to the `features_info.txt` provided by Human Activity Recognition Usin
 > std(): Standard deviation
 > (...)
 > meanFreq(): Weighted average of the frequency components to obtain a mean frequency
+> (...)
 
 According to the `features_info.txt`, there are other vectors that, although means, their respective features are actually `angles`:
 
@@ -313,8 +318,9 @@ After all this reasoning and for the sake of the completeness, it is assumed tha
 Create a filter of the features required by this project considering the substrings `mean()`, `meanFreq()` and `std()`
 
 ``` r
-featureFilter <-
-    features[grepl("mean\\(\\)|meanFreq\\(\\)|std\\(\\)", features$description), 1]
+featureFilter <- features[grepl("mean\\(\\)|meanFreq\\(\\)|std\\(\\)",
+                                features$expression)
+                          , 1]
 ```
 
 Extract the mean and standard deviation variables
@@ -332,7 +338,7 @@ dataset <- dataset %>% mutate(activity = activity_labels$description[activity])
 ### 4. Appropriately labels the data set with descriptive variable names.
 
 ``` r
-dataset <- dataset %>% mutate(variable = features$description[variable])
+dataset <- dataset %>% mutate(variable = features$expression[variable])
 ```
 
 ### 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.

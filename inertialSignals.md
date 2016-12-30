@@ -1,19 +1,36 @@
-# Script: run_analysis.R
-# Author: Maurício Collaça Ramos
-# Date: 27/Dec/2016
-# Description: collect, tidy, filter and make some statistics of the HAR data
-# set, producing a new tidy data set
+inertialSignals
+================
 
+Analyzes the Inertial Signals of the HAR Data Set V1.0.
+-------------------------------------------------------
+
+``` r
 library(dplyr)
+```
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
+
+``` r
 library(tidyr)
 url <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
 destfile = 'Dataset.zip'
 if(!file.exists(destfile)) { download.file(url, destfile) }
 if(!dir.exists("UCI HAR Dataset")) { unzip(destfile, setTimes = TRUE) }
 basedir <- getwd()
+```
 
+``` r
 features <- read.table(file.path(basedir,"UCI HAR Dataset","features.txt"),
-                       col.names = c("id", "expression"),
+                       col.names = c("id", "description"),
                        stringsAsFactors = FALSE)
 
 activity_labels <- read.table(file.path(basedir,
@@ -64,38 +81,58 @@ subject_test <- read.table(file.path(basedir,
                                      "subject_test.txt"),
                            header = FALSE,
                            col.names = "subject")
+```
 
-## REQUIREMENT #1. Merges the training and the test sets to create one data set.
-dataset <- bind_rows(bind_cols(subject_train, y_train, X_train),
-                     bind_cols(subject_test, y_test, X_test))
-dataset <- gather(dataset,
-                  variable,
-                  value,
-                  (length(dataset) - 560):(length(dataset)),
-                  convert = TRUE)
+``` r
+total_acc <- read.table(file.path(basedir,
+                                "UCI HAR Dataset",
+                                "train",
+                                "Inertial Signals",
+                                "total_acc_x_train.txt"),
+                      header = FALSE,
+                      col.names = 1:128,
+                      check.names = FALSE,
+                      colClasses = "numeric")
+```
 
-## REQUIREMENT #2. Extracts only the measurements on the mean and standard 
-## deviation for each measurement.
-featureFilter <- features[grepl("mean\\(\\)|meanFreq\\(\\)|std\\(\\)",
-                                features$expression)
-                          , 1]
-dataset <- dataset %>% filter(variable %in% featureFilter)
+``` r
+library(plyr)
+```
 
-## REQUIREMENT #3. Uses descriptive activity names to name the activities in the
-## data set
-dataset <- dataset %>% mutate(activity = activity_labels$description[activity])
+    ## -------------------------------------------------------------------------
 
-## REQUIREMENT #4. Appropriately labels the data set with descriptive variable
-## names.
-dataset <- dataset %>% mutate(variable = features$expression[variable])
+    ## You have loaded plyr after dplyr - this is likely to cause problems.
+    ## If you need functions from both plyr and dplyr, please load plyr first, then dplyr:
+    ## library(plyr); library(dplyr)
 
-## REQUIREMENT #5. From the data set in step 4, creates a second, independent
-## tidy data set with the average of each variable for each activity and each
-## subject.
-averages <- dataset %>%
-    group_by(subject, activity, variable) %>%
-    summarize(average = mean(value)) %>%
-    as.data.frame
-write.table(averages, file = "tidyDataSet.txt", row.names = FALSE)
-View(read.table("tidyDataSet.txt", header = TRUE, stringsAsFactors = FALSE))
+    ## -------------------------------------------------------------------------
 
+    ## 
+    ## Attaching package: 'plyr'
+
+    ## The following objects are masked from 'package:dplyr':
+    ## 
+    ##     arrange, count, desc, failwith, id, mutate, rename, summarise,
+    ##     summarize
+
+``` r
+rawsignals <- c("tAcc","tGyro")
+signals <- c("tBodyAcc","tGravityAcc")
+axials <- c("x","y","z")
+
+subdirs <- c("train","test")
+
+paths <- dir(file.path(basedir,
+                       "UCI HAR Dataset",
+                       "train",
+                       "Inertial Signals"),
+             pattern = "(^total_acc_).*(\\.txt$)",
+             full.names = TRUE)
+names(paths) <- basename(paths)
+total_acc <- ldply(paths, 
+                   read.table,
+                   header = FALSE,
+                   col.names = 1:128,
+                   check.names = FALSE,
+                   colClasses = "numeric")
+```
