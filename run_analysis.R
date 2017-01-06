@@ -6,66 +6,30 @@
 
 library(dplyr)
 library(tidyr)
+
 url <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
 destfile = 'Dataset.zip'
 if(!file.exists(destfile)) { download.file(url, destfile) }
+unzip(zipfile = "Dataset.zip", list = TRUE)[c(1:5,16:19,30:32),1]
 if(!dir.exists("UCI HAR Dataset")) { unzip(destfile, setTimes = TRUE) }
+
 basedir <- getwd()
+source("HAR-analysis.R")
 
-features <- read.table(file.path(basedir,"UCI HAR Dataset","features.txt"),
-                       col.names = c("id", "expression"),
-                       stringsAsFactors = FALSE)
+path <- file.path(basedir,"UCI HAR Dataset")
+features <- read_features(path,"features.txt")
+activity_labels <- read_activity_labels(path,"activity_labels.txt")
+path <- file.path(basedir,"UCI HAR Dataset","train")
+X_train <- read_X_train(path,"X_train.txt")
+y_train <- read_y_train(path,"y_train.txt")
+subject_train <- read_subject_train(path,"subject_train.txt")
+path <- file.path(basedir,"UCI HAR Dataset","test")
+X_test <- read_X_test(path,"X_test.txt")
+y_test <- read_y_test(path,"y_test.txt")
+subject_test <- read_subject_test(path,"subject_test.txt")
 
-activity_labels <- read.table(file.path(basedir,
-                                        "UCI HAR Dataset",
-                                        "activity_labels.txt"),
-                              col.names = c("id", "description"),
-                              stringsAsFactors = FALSE)
+### 1. Merges the training and the test sets to create one data set.
 
-X_train <- read.table(file.path(basedir,
-                                "UCI HAR Dataset",
-                                "train",
-                                "X_train.txt"),
-                      header = FALSE,
-                      col.names = 1:561,
-                      check.names = FALSE,
-                      colClasses = "numeric")
-
-y_train <- read.table(file.path(basedir,
-                                "UCI HAR Dataset",
-                                "train",
-                                "y_train.txt"),
-                      header = FALSE,
-                      col.names = "activity")
-
-subject_train <- read.table(file.path(basedir,
-                                      "UCI HAR Dataset",
-                                      "train",
-                                      "subject_train.txt"),
-                            header = FALSE,
-                            col.names = "subject")
-
-X_test <- read.table(file.path(basedir,
-                               "UCI HAR Dataset",
-                               "test",
-                               "X_test.txt"),
-                     header = FALSE,
-                     col.names = 1:561,
-                     check.names = FALSE,
-                     colClasses = "numeric")
-
-y_test <- read.table(file.path(basedir,"UCI HAR Dataset","test","y_test.txt"),
-                     header = FALSE,
-                     col.names = "activity")
-
-subject_test <- read.table(file.path(basedir,
-                                     "UCI HAR Dataset",
-                                     "test",
-                                     "subject_test.txt"),
-                           header = FALSE,
-                           col.names = "subject")
-
-## REQUIREMENT #1. Merges the training and the test sets to create one data set.
 dataset <- bind_rows(bind_cols(subject_train, y_train, X_train),
                      bind_cols(subject_test, y_test, X_test))
 dataset <- gather(dataset,
@@ -74,28 +38,24 @@ dataset <- gather(dataset,
                   (length(dataset) - 560):(length(dataset)),
                   convert = TRUE)
 
-## REQUIREMENT #2. Extracts only the measurements on the mean and standard 
-## deviation for each measurement.
-featureFilter <- features[grepl("mean\\(\\)|meanFreq\\(\\)|std\\(\\)",
-                                features$expression)
-                          , 1]
+### 2. Extracts only the measurements on the mean and standard deviation for each measurement.
+
+featureFilter <- features[grepl("mean\\(\\)|meanFreq\\(\\)|std\\(\\)",features$label), 1]
 dataset <- dataset %>% filter(variable %in% featureFilter)
 
-## REQUIREMENT #3. Uses descriptive activity names to name the activities in the
-## data set
-dataset <- dataset %>% mutate(activity = activity_labels$description[activity])
+### 3. Uses descriptive activity names to name the activities in the data set
 
-## REQUIREMENT #4. Appropriately labels the data set with descriptive variable
-## names.
-dataset <- dataset %>% mutate(variable = features$expression[variable])
+dataset <- dataset %>% mutate(activity = activity_labels$label[activity])
 
-## REQUIREMENT #5. From the data set in step 4, creates a second, independent
-## tidy data set with the average of each variable for each activity and each
-## subject.
+### 4. Appropriately labels the data set with descriptive variable names.
+
+dataset <- dataset %>% mutate(variable = features$label[variable])
+
+### 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
 averages <- dataset %>%
-    group_by(subject, activity, variable) %>%
-    summarize(average = mean(value)) %>%
-    as.data.frame
+group_by(subject, activity, variable) %>%
+summarize(average = mean(value)) %>%
+as.data.frame
 write.table(averages, file = "tidyDataSet.txt", row.names = FALSE)
 View(read.table("tidyDataSet.txt", header = TRUE, stringsAsFactors = FALSE))
-

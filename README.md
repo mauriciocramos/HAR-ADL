@@ -36,6 +36,8 @@ The repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) in
 
 -   [tidyDataSet.txt](https://github.com/mauriciocramos/HAR-analysis/blob/master/tidyDataSet.txt) - Tidy data set output from [run\_analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R), containing the the average of each mean and standard deviation variable for each activity and each subject. Specific details about the data are found in its [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md).
 
+-   [HAR-analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-analysis.R) - R script containing functions developed to encapsulate code and improve the reusability and the readability of the [run\_analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R).
+
 General information about the environment used
 ----------------------------------------------
 
@@ -175,89 +177,36 @@ More details about these files are found in the [CodeBook](https://github.com/ma
 
 Loading the General files from directory `./UCI HAR Dataset/`:
 
-Load the `features.txt`:
+As mentioned above, in order to encapsulate code and improve the reusability and the readability of the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script, the file reading functions were written in a separate R script called [HAR-analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-analysis.R). Its reading is not necessary in order to understand the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) but you may find it instructive.
 
 ``` r
-features <- read.table(file.path(basedir,"UCI HAR Dataset","features.txt"),
-                       col.names = c("id", "expression"),
-                       stringsAsFactors = FALSE)
+source("HAR-analysis.R")
+path <- file.path(basedir,"UCI HAR Dataset")
+features <- read_features(path,"features.txt")
+activity_labels <- read_activity_labels(path,"activity_labels.txt")
 ```
 
-Load the `activity_labels.txt`:
+Loading the Trainning data sets from the directory `./UCI HAR Dataset/train`
+
+Load the `X_train.txt`, `y_train.txt` and `subject_train.txt` files
 
 ``` r
-activity_labels <- read.table(file.path(basedir,
-                                        "UCI HAR Dataset",
-                                        "activity_labels.txt"),
-                              col.names = c("id", "description"),
-                              stringsAsFactors = FALSE)
+path <- file.path(basedir,"UCI HAR Dataset","train")
+X_train <- read_X_train(path,"X_train.txt")
+y_train <- read_y_train(path,"y_train.txt")
+subject_train <- read_subject_train(path,"subject_train.txt")
 ```
 
-Loading the Trainning data sets from the directory `./UCI HAR Dataset/train`:
+Loading the Test data sets from the directory `./UCI HAR Dataset/test`
 
-Load the `X_train.txt` file:
+Load the `X_test.txt`, `y_test.txt` and `subject_test.txt` files
 
 ``` r
-X_train <- read.table(file.path(basedir,
-                                "UCI HAR Dataset",
-                                "train",
-                                "X_train.txt"),
-                      header = FALSE,
-                      col.names = 1:561,
-                      check.names = FALSE,
-                      colClasses = "numeric")
+path <- file.path(basedir,"UCI HAR Dataset","test")
+X_test <- read_X_test(path,"X_test.txt")
+y_test <- read_y_test(path,"y_test.txt")
+subject_test <- read_subject_test(path,"subject_test.txt")
 ```
-
-NOTE: The use of the argument `check.names = FALSE` forces the column names of `X_train` data frame as `numeric` `1:561` rather than `character` `X1:X561` (R default behaviour). That simplifies labeling variables in requirement \#4 bellow. This approach is based on from Hadley Wickham's concept "Tidying messy data sets" and "Column headers are values, not variable names" at: <https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html>
-
-Load `y_train.txt` and `subject_train.txt` files:
-
-``` r
-y_train <- read.table(file.path(basedir,
-                                "UCI HAR Dataset",
-                                "train",
-                                "y_train.txt"),
-                      header = FALSE,
-                      col.names = "activity")
-
-subject_train <- read.table(file.path(basedir,
-                                      "UCI HAR Dataset",
-                                      "train",
-                                      "subject_train.txt"),
-                            header = FALSE,
-                            col.names = "subject")
-```
-
-Loading the Test data sets from the directory `./UCI HAR Dataset/test`:
-
-Load the `X_test.txt`, `y_test.txt` and `subject_test.txt` files:
-
-``` r
-X_test <- read.table(file.path(basedir,
-                               "UCI HAR Dataset",
-                               "test",
-                               "X_test.txt"),
-                     header = FALSE,
-                     col.names = 1:561,
-                     check.names = FALSE,
-                     colClasses = "numeric")
-
-y_test <- read.table(file.path(basedir,
-                               "UCI HAR Dataset",
-                               "test",
-                               "y_test.txt"),
-                     header = FALSE,
-                     col.names = "activity")
-
-subject_test <- read.table(file.path(basedir,
-                                     "UCI HAR Dataset",
-                                     "test",
-                                     "subject_test.txt"),
-                           header = FALSE,
-                           col.names = "subject")
-```
-
-After explained the loading of all data set files it's now time to explain the solution to each requirement.
 
 ### 1. Merges the training and the test sets to create one data set.
 
@@ -318,9 +267,7 @@ After all this reasoning and for the sake of the completeness, it is assumed tha
 Create a filter of the features required by this project considering the substrings `mean()`, `meanFreq()` and `std()`
 
 ``` r
-featureFilter <- features[grepl("mean\\(\\)|meanFreq\\(\\)|std\\(\\)",
-                                features$expression)
-                          , 1]
+featureFilter <- features[grepl("mean\\(\\)|meanFreq\\(\\)|std\\(\\)",features$label), 1]
 ```
 
 Extract the mean and standard deviation variables
@@ -332,13 +279,13 @@ dataset <- dataset %>% filter(variable %in% featureFilter)
 ### 3. Uses descriptive activity names to name the activities in the data set
 
 ``` r
-dataset <- dataset %>% mutate(activity = activity_labels$description[activity])
+dataset <- dataset %>% mutate(activity = activity_labels$label[activity])
 ```
 
 ### 4. Appropriately labels the data set with descriptive variable names.
 
 ``` r
-dataset <- dataset %>% mutate(variable = features$expression[variable])
+dataset <- dataset %>% mutate(variable = features$label[variable])
 ```
 
 ### 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
@@ -352,13 +299,13 @@ averages <- dataset %>%
     as.data.frame
 ```
 
-Write the tidy data set file `tidyDataSet.txt` in the current working directory
+Write the tidy data set file [`tidyDataSet.txt`](https://github.com/mauriciocramos/HAR-analysis/blob/master/tidyDataSet.txt) in the current working directory
 
 ``` r
 write.table(averages, file = "tidyDataSet.txt", row.names = FALSE)
 ```
 
-For the peer evaluation of the tidy data set file `tidyDataSet.txt`:
+For the peer evaluation of the tidy data set file [`tidyDataSet.txt`](https://github.com/mauriciocramos/HAR-analysis/blob/master/tidyDataSet.txt):
 
 ``` r
 View(read.table("tidyDataSet.txt", header = TRUE, stringsAsFactors = FALSE))
