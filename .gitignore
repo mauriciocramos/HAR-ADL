@@ -2,20 +2,17 @@
 .Rhistory
 .RData
 .Ruserdata
+CodeBook.Rmd
 Getting and Cleaning Data Course Project _ Coursera.pdf
 Getting and Cleaning the Assignment _ thoughtfulbloke aka David Hood.pdf
 HAR-analysis.Rproj
+HAR-features.Rmd
+HAR-signals.pptx
 Notepad++Session.xml
-README.Rmd
 UCI HAR Dataset.names
+~$HAR-signals.pptx
+inertialSignals.Rmd
 UCI Machine Learning Repository_ Human Activity Recognition Using Smartphones Data Set.pdf
-features_info_COMMENTED.txt
+README.Rmd
 Dataset.zip
 UCI HAR Dataset
-CodeBook.Rmd
-inertialSignals.Rmd
-parseFeatures.Rmd
-HAR-signals.pptx
-~$HAR-signals.pptx
-tidyDataSet.txt
-HAR-features.Rmd
