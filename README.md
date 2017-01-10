@@ -421,13 +421,13 @@ str(averages)
     ##  $ feature : chr  "fBodyAcc-mean()-X" "fBodyAcc-mean()-Y" "fBodyAcc-mean()-Z" "fBodyAcc-meanFreq()-X" ...
     ##  $ average : num  -0.9391 -0.8671 -0.8827 -0.1588 0.0975 ...
 
-The result is exported to the file `averages.txt` in the current working directory
+The result is exported to the file [`averages.txt`](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt) in the current working directory
 
 ``` r
 write.table(averages, file = "averages.txt", row.names = FALSE)
 ```
 
-For the peer reviewing of the file `averages.txt` one can load it with the following command
+For the peer reviewing of the file [`averages.txt`](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt) one can load it with the following command
 
 ``` r
 View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))
