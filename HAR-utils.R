@@ -46,6 +46,20 @@ read_features_info <- function(..., file = HARpath("features_info.txt"), sep = "
     read.table(..., file = file, sep = sep, strip.white = strip.white, stringsAsFactors = FALSE)
 }
 
+tidy_feature_measurements <- function() {
+    library(dplyr)
+    library(tidyr)
+    bind_cols(
+        data.frame(window = seq_len(10299)),
+        bind_rows(
+            bind_cols(read_subject("train"), read_y("train"), read_X("train")),
+            bind_cols(read_subject("test"), read_y("test"), read_X("test"))
+        )) %>%
+        gather(feature, value, 4:564, convert = TRUE) %>%
+        mutate(activity = read_activity_labels()$name[activity]) %>%
+        mutate(feature = read_features()$name[feature])
+}
+
 read_inertial_signal <- function(set, signal, axis, colPrefix, file = HARpath(set, "Inertial Signals", paste0(signal, "_", axis, "_", set, ".txt"))) {
     read_naming(file, col.names = paste0(colPrefix, "-", toupper(axis), stringr::str_pad(1:128, 3, "left", "0")), check.names = FALSE, colClasses = "numeric")
 }
