@@ -1,5 +1,5 @@
 # Script: dsub.R
-# Author: Maurício Collaça Ramos
+# Author: Maurício Collaça
 # Date: 24/Jan/2017
 # Description: Data Frame Pattern Matching and Replacement
 

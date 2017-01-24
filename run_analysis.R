@@ -1,5 +1,5 @@
 # Script: run_analysis.R
-# Author: Maurício Collaça Ramos
+# Author: Maurício Collaça
 # Date: 24/Jan/2017
 # Description: collect, tidy, filter and make some statistics of the HAR data
 # set, producing a new tidy data set
