@@ -1,7 +1,7 @@
 HAR-analysis
 ================
 by Maurício Collaça
-2017-01-10
+2017-01-23
 
 Human Activity Recognition (HAR) using smartphones Data Set analysis
 --------------------------------------------------------------------
@@ -140,21 +140,33 @@ if(!file.exists(destfile)) { download.file(url, destfile) }
 The zip file `Dataset.zip` contains a subdirectory structure and multiple files that the `run_analysis.R` script needs to dealth with. The following command displays the relevant files:
 
 ``` r
-unzip(zipfile = "Dataset.zip", list = TRUE)[c(1:5,16:19,30:32),1]
+unzip(zipfile = "Dataset.zip", list = TRUE)[c(1:2,16:18,30:32),1]
 ```
 
-    ##  [1] "UCI HAR Dataset/activity_labels.txt"    
-    ##  [2] "UCI HAR Dataset/features.txt"           
-    ##  [3] "UCI HAR Dataset/features_info.txt"      
-    ##  [4] "UCI HAR Dataset/README.txt"             
-    ##  [5] "UCI HAR Dataset/test/"                  
-    ##  [6] "UCI HAR Dataset/test/subject_test.txt"  
-    ##  [7] "UCI HAR Dataset/test/X_test.txt"        
-    ##  [8] "UCI HAR Dataset/test/y_test.txt"        
-    ##  [9] "UCI HAR Dataset/train/"                 
-    ## [10] "UCI HAR Dataset/train/subject_train.txt"
-    ## [11] "UCI HAR Dataset/train/X_train.txt"      
-    ## [12] "UCI HAR Dataset/train/y_train.txt"
+    ## [1] "UCI HAR Dataset/activity_labels.txt"    
+    ## [2] "UCI HAR Dataset/features.txt"           
+    ## [3] "UCI HAR Dataset/test/subject_test.txt"  
+    ## [4] "UCI HAR Dataset/test/X_test.txt"        
+    ## [5] "UCI HAR Dataset/test/y_test.txt"        
+    ## [6] "UCI HAR Dataset/train/subject_train.txt"
+    ## [7] "UCI HAR Dataset/train/X_train.txt"      
+    ## [8] "UCI HAR Dataset/train/y_train.txt"
+
+`features.txt` is the list of the 561 feature names produced by the experiment.
+
+`activity_labels.txt` is the list of the six activities carried out in the experiment. Each row contains an activity identifier and a label.
+
+`X_train.txt` is the trainning observation set of the experiment. Each row contains a 561-feature vector with time and frequency domain variables.
+
+`X_test.txt` is the test observation set of the experiment. Each row contains a 561-feature vector with time and frequency domain variables.
+
+`y_train.txt` contains the identifiers of the activities associated with the trainning observation set.
+
+`y_test.txt` contains the identifiers of the activities associated with the test observation set.
+
+`subject_train.txt` contains the identifiers of the subjects who carried out the trainning activities of the experiment. Each row identifies the subject who performed the activity for each window sample.
+
+`subject_test.txt` contains the identifiers of the subjects who carried out the trainning activities of the experiment. Each row identifies the subject who performed the activity for each window sample.
 
 The script uncompress the zip file `Dataset.zip` into the the folder `UCI HAR Dataset` of the working directory only once, unless you delete this folder letting the script uncompress the zip file again:
 
@@ -162,87 +174,40 @@ The script uncompress the zip file `Dataset.zip` into the the folder `UCI HAR Da
 if(!dir.exists("UCI HAR Dataset")) { unzip(destfile, setTimes = TRUE) }
 ```
 
-The script loads three groups os data set files tied-up with the subdirectory structure:
-
--   General files at `UCI HAR Dataset/`
--   Training set filest at `UCI HAR Dataset/train/`
--   Testing set files at `UCI HAR Dataset/test/`
-
-More details about these files are found in the [CodeBook](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md). All eight data set files area loaded into R `data.frame` objects.
-
-As mentioned above, in order to encapsulate code and improve the reusability and the readability of the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script, the file reading functions were written in a separate R script called [HAR-utils.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-utils.R). Its reading is not necessary in order to understand the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) but you may find it instructive.
+As mentioned above, in order to encapsulate code and improve the reusability and the readability of the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script, the file reading functions were written in a separate R script called [HAR-utils.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-utils.R).
 
 ``` r
 source("HAR-utils.R")
 ```
 
-Loading the general files `features.txt` and `activity_labels.txt` from the directory `./UCI HAR Dataset/`:
+It's not necessary to read the `HAR-utils.R` source code in order to understand the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R).
 
-``` r
-features <- read_features()
-```
+These functions loads the data set files into R `data.frame` objects:
 
-Preview the feature names
-
-``` r
-head(features)
-```
-
-    ##   id              name
-    ## 1  1 tBodyAcc-mean()-X
-    ## 2  2 tBodyAcc-mean()-Y
-    ## 3  3 tBodyAcc-mean()-Z
-    ## 4  4  tBodyAcc-std()-X
-    ## 5  5  tBodyAcc-std()-Y
-    ## 6  6  tBodyAcc-std()-Z
-
-``` r
-activity_labels <- read_activity_labels()
-```
-
-Print the activity labels
-
-``` r
-activity_labels
-```
-
-    ##   id               name
-    ## 1  1            WALKING
-    ## 2  2   WALKING_UPSTAIRS
-    ## 3  3 WALKING_DOWNSTAIRS
-    ## 4  4            SITTING
-    ## 5  5           STANDING
-    ## 6  6             LAYING
-
-Loading the trainning data set files `X_train.txt`, `y_train.txt` and `subject_train.txt` from the directory `./UCI HAR Dataset/train`
-
-``` r
-X_train <- read_X_train()
-y_train <- read_y_train()
-subject_train <- read_subject_train()
-```
-
-Loading the test data file `X_test.txt`, `y_test.txt` and `subject_test.txt` from the directory `./UCI HAR Dataset/test`
-
-``` r
-X_test <- read_X_test()
-y_test <- read_y_test()
-subject_test <- read_subject_test()
-```
+`read_feature()` reads the `features.txt`
+`read_activity_labels()` reads the `activity_labels.txt`
+`read_X()` reads either `X_train.txt` or `X_test.txt`
+`read_y()` reads either `y_train.txt` or `y_test.txt`
+`read_subject()` reads either `subject_train.txt` or `subject_test.txt`
 
 ### 1. Merges the training and the test sets to create one data set.
 
-In this requirement it's anticipated part of requirements \#3 and \#5. It's decided to merge the measurements (`X_train`, `X_test`) with their respectives subjects (`subject_train`, `subject_test`) and activities (`y_train`, `y_test`) prior to merge both results in one single data set. This approach is based on Hadley Wickham's concept "Tidying messy data sets" and "One type in multiple tables" at: <https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html>
+Based on Hadley Wickham's concept "Tidying messy data sets" and "One type in multiple tables" at <https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html>, the approach is to merge the observations (`X_train`, `X_test`) with their respective subjects (`subject_train`, `subject_test`) and respective activities (`y_train`, `y_test`), then finally merge both previously merged sets.
 
--   Horizontally merge the three trainning-related data sets `subject_train`, `y_train`, `X_train`
--   Horizontally merge the three test-related data sets `subject_test`, `y_test`, `X_test`
--   Vertically merge the two previously merged data sets
+In other words:
+
+-   Bind columns of the three trainning sets `subject_train`, `y_train`, `X_train`
+-   Bind columns of the three test sets `subject_test`, `y_test`, `X_test`
+-   Bind rows of the two previously bound sets
 
 Used `dplyr` functions `bind_cols()` for horizontal merging and `bind_rows()` for vertical merging:
 
 ``` r
-dataset <- bind_rows(bind_cols(subject_train, y_train, X_train),
-                     bind_cols(subject_test, y_test, X_test))
+dataset <-
+    bind_rows(
+        bind_cols(read_subject("train"), read_y("train"), read_X("train")),
+        bind_cols(read_subject("test"), read_y("test"), read_X("test"))
+    )
 ```
 
 Number of rows after merging:
@@ -275,13 +240,15 @@ head(dataset[,c(1:5,562:563)])
     ## 5       1        5 0.2766288 -0.01656965 -0.1153619 0.1851512 -0.04389225
     ## 6       1        5 0.2771988 -0.01009785 -0.1051373 0.1848225 -0.04212638
 
-As you can see, this data set can be tidier. In order to have a tidier (long) data set, it's necessary to collapse the 561 columns that are not variables into key-value pair, as mentioned in the rubric:
+As mentioned in the rubric:
 
 > "either long or wide form is acceptable”.
 
+This data set can be tidier. In order to have a tidier (long) data set, it's necessary to collapse the 561 columns that are not variables into key-value pairs.
+
 The following idiom is based on Hadley Wickham's concept "Tidying messy data sets" and "Column headers are values, not variable names" at: <https://cran.r-project.org/web/packages/tidyr/vignettes/tidy-data.html>
 
-Used `tidyr` function `gather()` to take the right-most 561 columns and collapse them into key-value pairs `feature,value`, duplicating rows for columns `subject` and `activity` as needed.
+The `tidyr` function `gather()` takes the right-most 561 columns and collapse them into key-value pairs `feature,value`, duplicating rows for columns `subject` and `activity` as needed.
 
 ``` r
 dataset <- dataset %>%
@@ -335,6 +302,7 @@ After all this reasoning and for the sake of the completeness, it is assumed tha
 Create a regular expression filter to subset the feature ids required, considering the substrings `mean()`, `meanFreq()` and `std()`
 
 ``` r
+features<-read_features()
 selectedFeatureIds <- features[grep("(mean|meanFreq|std)\\(\\)",features$name), 1]
 ```
 
@@ -361,6 +329,7 @@ str(dataset)
 Used `dplyr` function `mutate()` to replace the activity id with the activity label from the `activity_labels` data set.
 
 ``` r
+activity_labels <- read_activity_labels()
 dataset <- mutate(dataset, activity = activity_labels$name[activity])
 ```
 
@@ -382,8 +351,7 @@ Used `dplyr` function `mutate()` to replace the feature id with the feature name
 
 ``` r
 dataset <- dataset %>%
-    mutate(feature = features$name[feature]) %>%
-    arrange(subject, activity, feature)
+    mutate(feature = features$name[feature])
 ```
 
 Preview of the named features:
@@ -394,9 +362,9 @@ str(dataset)
 
     ## 'data.frame':    813621 obs. of  4 variables:
     ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ activity: chr  "LAYING" "LAYING" "LAYING" "LAYING" ...
-    ##  $ feature : chr  "fBodyAcc-mean()-X" "fBodyAcc-mean()-X" "fBodyAcc-mean()-X" "fBodyAcc-mean()-X" ...
-    ##  $ value   : num  -0.926 -0.987 -0.994 -0.996 -0.997 ...
+    ##  $ activity: chr  "STANDING" "STANDING" "STANDING" "STANDING" ...
+    ##  $ feature : chr  "tBodyAcc-mean()-X" "tBodyAcc-mean()-X" "tBodyAcc-mean()-X" "tBodyAcc-mean()-X" ...
+    ##  $ value   : num  0.289 0.278 0.28 0.279 0.277 ...
 
 ### 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
