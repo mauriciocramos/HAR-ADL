@@ -1,7 +1,7 @@
 HAR-features
 ================
 by Maurício Collaça
-2017-01-24
+on 2017-01-24
 
 Introduction
 ------------

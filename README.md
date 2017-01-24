@@ -1,7 +1,7 @@
 HAR-analysis
 ================
 by Maurício Collaça
-2017-01-24
+on 2017-01-24
 
 Human Activity Recognition (HAR) using smartphones Data Set analysis
 --------------------------------------------------------------------
