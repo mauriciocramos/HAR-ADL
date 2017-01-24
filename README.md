@@ -1,7 +1,7 @@
 HAR-analysis
 ================
 by Maurício Collaça
-2017-01-23
+2017-01-24
 
 Human Activity Recognition (HAR) using smartphones Data Set analysis
 --------------------------------------------------------------------
@@ -24,7 +24,7 @@ Original:
 About this README:
 ------------------
 
-This document is an explanation about the Github repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) and its files developed for [John Hopkins University](https://www.jhu.edu/) [Data Science Specialization](https://www.coursera.org/specializations/jhu-data-science). .
+This document is an explanation about the Github repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) and its files developed for the [Data Science Specialization](https://www.coursera.org/specializations/jhu-data-science) at [John Hopkins University](https://www.jhu.edu/).
 
 The repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) includes the following files:
 -----------------------------------------------------------------------------------------------------------
@@ -41,10 +41,6 @@ The repository [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) in
 
 General information about the environment used
 ----------------------------------------------
-
-Coffee machine:
-
-    NESPRESSO Inissia, model D40
 
 Hardware:
 
@@ -71,29 +67,35 @@ R Studio:
 R packages used beyond the R defaults `{base}`, `{utils}`, `{stat}`:
 
 `{dplyr}` (Windows binary r-release: [dplyr\_0.5.0](https://cran.r-project.org/bin/windows/contrib/3.3/dplyr_0.5.0.zip))
-
 `{tidyr}` (Windows binary r-relase: [tidyr\_0.6.0](https://cran.r-project.org/bin/windows/contrib/3.3/tidyr_0.6.0.zip))
 
 The [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script
 --------------------------------------------------------------------------------------------------------
 
-To run the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script, save it in some working directory, open `R` or `RStudio`, go to that directory and run it with the following command:
+Requirements to run the script:
 
-`source("run_analysis.R")`
+1.  Installation of the packages {dplyr} and {tidyr}.
+2.  Download both `run_analysis.R` and `HAR-utils.R` in some local working directory
 
-With the hardware and software configuration described earlier, it takes around 55 seconds to complete at the first time, which also includes the downloading and uncompressing tasks.
+To run the script:
+
+1.  Open `R` or `RStudio`
+2.  Go to the directory where the scripts were download, for instance, `setwd("your-directory-here")`
+3.  Run the command: `source("run_analysis.R")`
+
+With the hardware and software configuration described earlier, it takes around 55 seconds to complete at the first time, which also includes the downloading and uncompressing tasks. That also depends on the internet connection to the <https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip> at running time.
 
 `system.time(source("run_analysis.R"))`
 
      user  system elapsed
-    18.22    8.89   54.79
+    17.86    7.71   54.25
 
-At the next times, you run it, there won't be any download and uncompressing task, then it takes around 14 seconds.
+On the next times you run it, there won't be any download and uncompressing tasks and it would take around 14 seconds.
 
 `system.time(source("run_analysis.R"))`
 
      user  system elapsed
-    12.93    0.12   13.53
+    12.85    0.36   13.36
 
 The [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script was developed to fullfill the following formal requirements of the project:
 
@@ -128,16 +130,16 @@ The `{tidyr}` function `gather()` is used to take multiple columns and collapses
 library(tidyr)
 ```
 
-The script downloads the zip file `Dataset.zip` into your working directory only once, unless you delete it letting the script donwload it again.
+The script downloads the zip file `Dataset.zip` into your working directory only once, unless you delete it, letting the script download it again.
 
 ``` r
 url <- 
 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
 destfile = 'Dataset.zip'
-if(!file.exists(destfile)) { download.file(url, destfile) }
+if(!file.exists(destfile)) { download.file(url, destfile, mode = "wb") }
 ```
 
-The zip file `Dataset.zip` contains a subdirectory structure and multiple files that the `run_analysis.R` script needs to dealth with. The following command displays the relevant files:
+The zip file `Dataset.zip` contains a subdirectory structure and multiple files that `run_analysis.R` needs to read. The following command displays those files:
 
 ``` r
 unzip(zipfile = "Dataset.zip", list = TRUE)[c(1:2,16:18,30:32),1]
@@ -168,7 +170,7 @@ unzip(zipfile = "Dataset.zip", list = TRUE)[c(1:2,16:18,30:32),1]
 
 `subject_test.txt` contains the identifiers of the subjects who carried out the trainning activities of the experiment. Each row identifies the subject who performed the activity for each window sample.
 
-The script uncompress the zip file `Dataset.zip` into the the folder `UCI HAR Dataset` of the working directory only once, unless you delete this folder letting the script uncompress the zip file again:
+The script uncompress the zip file `Dataset.zip` into the the folder `UCI HAR Dataset` of the working directory only once, unless you delete this folder, letting the script uncompress the zip file again:
 
 ``` r
 if(!dir.exists("UCI HAR Dataset")) { unzip(destfile, setTimes = TRUE) }

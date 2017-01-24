@@ -1,29 +1,26 @@
 # Script: run_analysis.R
 # Author: Maurício Collaça Ramos
-# Date: 27/Dec/2016
+# Date: 24/Jan/2017
 # Description: collect, tidy, filter and make some statistics of the HAR data
 # set, producing a new tidy data set
 
 library(dplyr)
 library(tidyr)
 
-if(!file.exists("HAR-utils.R")) {
-    message("HAR-utils.R not found.  Downloading it...")
+if(!file.exists("HAR-utils.R"))
     download.file("https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R",
-                  "HAR-utils.R", quiet = TRUE)
-    message("...done")
-}
+                  "HAR-utils.R",
+                  quiet = TRUE)
 source("HAR-utils.R")
-
 url <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
 destfile = 'Dataset.zip'
 if(!file.exists(destfile)) {
     message("Plese wait...\n")
-    download.file(url, destfile)
-    message("...done")
+    download.file(url, destfile, mode = "wb")
+    message("...done\n")
 }
 if(!dir.exists("UCI HAR Dataset")) {
-    message("Plese wait.  Unzipping files...\n")
+    message("Plese wait.  Unzipping files...")
     unzip(destfile, setTimes = TRUE)
     message("...done\n")
 }

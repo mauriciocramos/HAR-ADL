@@ -1,4 +1,8 @@
-## Data Frame Pattern Matching and Replacement
+# Script: dsub.R
+# Author: Maurício Collaça Ramos
+# Date: 24/Jan/2017
+# Description: Data Frame Pattern Matching and Replacement
+
 dsub <- function(df, col, matchPattern, replacement, explain = TRUE, verbose = TRUE, matchMemory = "\\1") {
     # subset data frame using the matchPattern argument
     subset <- grep(matchPattern, df[[col]])
