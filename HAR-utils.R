@@ -31,6 +31,14 @@ read_naming <- function(..., col.names = "name", check.names = TRUE, colClasses 
 
 ## Additional functions not used by run_analysis.R
 
+getFeatureAxes <- function(feature) {
+    axes <- sub("^.+(Acc|Gyro|Jerk)(-)([a-zA-Z]+)\\(\\)-?([XYZ]?),?([YZ]?)[0-9]*,?[0-9]*$|.+","\\3\\4\\5",feature)
+    axes = sub("sma|bandsEnergy", "XYZ", axes)
+    axes = sub("correlation(XY|YZ|XZ){1}","\\1",axes)
+    axes = sub("arCoeff|energy|entropy|iqr|kurtosis|mad|max|maxInds|mean|meanFreq|min|skewness|std([XYZ])","\\1", axes)
+    axes
+}
+
 ## HAR features_info.txt wrapper
 read_signals <- function(...) {
     read_features_info(..., skip = 12, nrows = 17, col.names = "name")
@@ -46,7 +54,7 @@ read_features_info <- function(..., file = HARpath("features_info.txt"), sep = "
     read.table(..., file = file, sep = sep, strip.white = strip.white, stringsAsFactors = FALSE)
 }
 
-tidy_feature_measurements <- function() {
+read_feature_measurements <- function() {
     library(dplyr)
     library(tidyr)
     bind_cols(
@@ -56,15 +64,16 @@ tidy_feature_measurements <- function() {
             bind_cols(read_subject("test"), read_y("test"), read_X("test"))
         )) %>%
         gather(feature, value, 4:564, convert = TRUE) %>%
-        mutate(activity = read_activity_labels()$name[activity]) %>%
-        mutate(feature = read_features()$name[feature])
+        #mutate(activity = read_activity_labels()$name[activity]) %>%
+        #mutate(feature = read_features()$name[feature]) %>%
+        arrange(window)
 }
 
 read_inertial_signal <- function(set, signal, axis, colPrefix, file = HARpath(set, "Inertial Signals", paste0(signal, "_", axis, "_", set, ".txt"))) {
     read_naming(file, col.names = paste0(colPrefix, "-", toupper(axis), stringr::str_pad(1:128, 3, "left", "0")), check.names = FALSE, colClasses = "numeric")
 }
 
-tidy_inertial_signals <- function() {
+read_inertial_signals <- function() {
     library(dplyr)
     library(tidyr)
     bind_cols(data.frame(window = seq_len(10299)),
@@ -100,8 +109,9 @@ tidy_inertial_signals <- function() {
         separate(signal_reading,
                  c("signal", "reading"),
                  sep = -4,
-                 convert = TRUE)
-    # %>% arrange(window, subject, activity, signal, reading)
+                 convert = TRUE) %>%
+        #mutate(activity = read_activity_labels()$name[activity]) %>%
+        arrange(window)
 }
 
 ## Interval series for bandsEnergy calculus
