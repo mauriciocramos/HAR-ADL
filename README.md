@@ -18,7 +18,7 @@ These requirements are:
 
 The data set used in this project is from the University of California Irvine (UCI) Machine Learning Repository: Human Activity Recognition Using Smartphones Data Set Version 1.0. The data set represents data collected from 30 subjects performing activities of daily living (ADL) while carrying a waist-mounted Samsung Galaxy S smartphone with embedded accelerometer and gyroscope inertial sensors. The original documentation is available [here](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones).
 
-The data set for this project is available at [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) and [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip).
+The data set for this project is available at [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) or [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip).
 
 HAR-analysis repository
 -----------------------
@@ -43,11 +43,13 @@ These are the installation, running and evaluation instructions for the project.
 1.  If you still haven't done it, install R available at [The R Foundation](https://www.r-project.org/). This project used R version 3.3.2 (2016-10-31).
 2.  Optionally, you may use RStudio Desktop as well, available at [RStudio](https://www.rstudio.com/). This project used RStudio Desktop version 1.0.136.
 3.  If you still haven't done it, install additional R packages `{dplyr}` and `{tidyr}`. The easiest way to do that is via R (menu Packages &gt; Install Package(s)...) or RStudio (menu Tools &gt; Install packages...). This project used `{dplyr}` version 0.5.0 and `{tidr}` version 0.6.1.
-4.  Download both [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/run_analysis.R) and [HAR-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R) in some local working directory.
-5.  Open `R` or `RStudio`
-6.  Go to the directory where the scripts were download, for instance, `setwd("your-directory-here")`
-7.  Run the command: `source("run_analysis.R")`. At this point the script will download and uncompress `Dataset.zip` for your convenience, start the data processing and display the results. If you experience unexpected problems during this automated download you may do it manually by downloading the `Dataset.zip` from [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) or [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip) into your local working directory, then restart the script that will take care from the uncompressing point on.
-8.  The script will display a series of messages and summary results for each project requirement in the R/Rstudio Console, guiding you for your evaluation:
+4.  Download only [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/run_analysis.R) and [HAR-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R) in some local working directory of your preference. The other files (i.e. \*.md files) are not necessary to download for your evaluation as they are rendered by GitHub website. If you download them you would need Rstudio to view/render them in your computer.
+5.  Optionally, download the `Dataset.zip` from [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) or [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip) in the same local working directory but the script will do that for your convenience.
+6.  Open `R` or `RStudio`
+7.  Go to the directory where the scripts were download using the command `setwd("your-directory-here")`
+8.  Run the command: `source("run_analysis.R")`. At this point the script will download the `Dataset.zip` if necessary, uncompress it, start the data processing and display the results.
+
+The script will display a series of messages and summary results for each project requirement in the R/Rstudio Console, easying your evaluation:
 
 ``` r
 source("run_analysis.R")
@@ -64,7 +66,15 @@ source("run_analysis.R")
     ## 
     ##     intersect, setdiff, setequal, union
 
-    ## Plese wait.  Reading files...
+    ## Please wait. Downloading file...
+
+    ## ...done
+
+    ## Please wait.  Unzipping files...
+
+    ## ...done
+
+    ## Please wait.  Reading files...
 
     ## ...done
 
@@ -108,7 +118,7 @@ source("run_analysis.R")
     ##  $ feature : chr  "fBodyAcc-mean()-X" "fBodyAcc-mean()-Y" "fBodyAcc-mean()-Z" "fBodyAcc-meanFreq()-X" ...
     ##  $ average : num  -0.9391 -0.8671 -0.8827 -0.1588 0.0975 ...
 
-1.  The final output data set file `averages.txt` is summarized in the Console, saved in you local working directory and also opened in detail in window `View()` for your convenience by the script itself. You may check it out again by either looking into your local working directory or issuing the R command `View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))` to view it in an R/RStudio window.
+The final output data set file `averages.txt` is summarized in the Console, saved in you local working directory and also opened in detail in window `View()` for your convenience by the script itself. You may check it out again by either looking into your local working directory or issuing the R command `View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))` to view it in an R/RStudio window.
 
 I hope you enjoy it!
 

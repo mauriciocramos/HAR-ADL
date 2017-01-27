@@ -12,21 +12,21 @@ if(!file.exists("HAR-utils.R"))
                   "HAR-utils.R",
                   quiet = TRUE)
 source("HAR-utils.R")
-url <- 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
+url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 destfile = 'Dataset.zip'
 if(!file.exists(destfile)) {
-    message("Plese wait...\n")
-    download.file(url, destfile, mode = "wb")
+    message("Please wait. Downloading file...\n")
+    download.file(url, destfile, mode = "wb",cacheOK = FALSE)
     message("...done\n")
 }
 if(!dir.exists("UCI HAR Dataset")) {
-    message("Plese wait.  Unzipping files...")
+    message("Please wait.  Unzipping files...")
     unzip(destfile, setTimes = TRUE)
     message("...done\n")
 }
 
 ## 1. Merges the training and the test sets to create one data set.
-message("Plese wait.  Reading files...")
+message("Please wait.  Reading files...")
 dataset <-
     bind_rows(
         bind_cols(read_subject("train"), read_y("train"), read_X("train")),
