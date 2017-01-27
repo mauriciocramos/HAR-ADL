@@ -1,7 +1,7 @@
 HAR-analysis
 ================
 by Maurício Collaça
-on 2017-01-24
+on 2017-01-26
 
 Human Activity Recognition (HAR) analysis Code Book
 ---------------------------------------------------

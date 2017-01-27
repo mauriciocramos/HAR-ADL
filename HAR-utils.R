@@ -29,6 +29,16 @@ read_naming <- function(..., col.names = "name", check.names = TRUE, colClasses 
     read.table(..., col.names = col.names, check.names = check.names, colClasses = colClasses, stringsAsFactors = stringAsFactors)
 }
 
+
+
+
+
+
+
+
+
+
+
 ## Additional functions not used by run_analysis.R
 
 getFeatureAxes <- function(feature) {
