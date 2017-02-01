@@ -3,58 +3,86 @@
 # Date: 24/Jan/2017
 # Description: Data Frame Pattern Matching and Replacement
 
-dsub <- function(df, col, matchPattern, replacement, explain = TRUE, verbose = TRUE, matchMemory = "\\1") {
-    # subset data frame using the matchPattern argument
-    subset <- grep(matchPattern, df[[col]])
+dsub <- function(dfname, colname, grepPattern, subPattern, replacement, explain = TRUE, verbose = TRUE) {
+    envir = where(dfname)
+    subset <- grep(grepPattern, get(dfname)[[colname]])
     rows <- length(subset)
     if (rows == 0){
-        message(paste0("No match(es) for the match pattern \"", matchPattern ,"\"\n"))
+        message("No match(es) for grep pattern \"", escapeBS(grepPattern) ,"\"\n")
         return(invisible(rows))
     }
-    # Unique replacement patterns for each df[subset,col] by replacing the match pattern with the match memory
-    replacePatterns <- unique(sub(matchPattern, matchMemory, df[subset,col]))
-    # If the match pattern contains "|" (OR operator), e.g. 
-    # "(pattern1|pattern2)", and the replacement uses match memories that address that, e.g. 
-    # "\\1", that likely results in multiple replacement patterns.  Multiple replacement patterns are assumed a
-    # misuse use of dsub().  Rather than raise an error but still for the sake of a 
-    # safer replacement, a warning is raised and only the first replacement pattern
-    # is used.  That replicates the {base} sub() behaviour for a non scalar
-    # replacement argument.
+    replacePatterns <- unique(sub(grepPattern, subPattern, get(dfname)[subset, colname])) # Unique replacement patterns by replacing the match pattern with the match memory
     replacePatternCount <- length(replacePatterns)
     if (replacePatternCount > 1) {
-        warning(paste0("The match pattern \"", matchPattern,
-                       "\" matches ", rows,
-                       " rows but results in ", replacePatternCount,
-                       " distinct replacement patterns:\n\n", paste0("\"", replacePatterns, "\"", collapse=", "), "\n\n",
-                       "Only the first replacement pattern, \"", replacePatterns[1],
-                       "\", would be used, discarding:\n\n",
-                       paste0("\"", replacePatterns[2:replacePatternCount], "\"", collapse = ", "), "\n\n",
-                       "It's assumed a misuse of dsub() and it's strongly recommended to review the match pattern, for instance, ending it with \".*\" or \"$\"\n"
-        ),
-        appendLF=TRUE)
+        message("Grep pattern \"", escapeBS(grepPattern), "\" matches ", rows, " row(s)")
+        message("Sub pattern \"", escapeBS(subPattern), "\" results in ", replacePatternCount, " distinct replacement patterns:\n")
+        print(paste0("\"", replacePatterns, "\"", collapse=", "), quote = FALSE)
+        message("\nOnly the first replacement pattern \"", replacePatterns[1], "\" will be used, discarding:\n")
+        print(paste0("\"", replacePatterns[2:replacePatternCount], "\"", collapse = ", "), quote = FALSE)
+        message("\nIt's a misuse of dsub() and recommended to review the grep and sub patterns\n")
     }
     replacePattern <- replacePatterns[1]
-    # escapes all further parenthesis to avoid conflicts
-    escapedPattern <- gsub("([\\(\\)])","\\\\\\1", replacePattern)
-    # prepare the final replacement, replacing substrings, escape characters and match memories
-    finalReplacement <- sub(paste0("(",escapedPattern,")"), replacement, replacePattern)
-    # prepare the eval.parent() expression
-    expressionParseTree <- substitute(df[subset, col] <- sub(escapedPattern, finalReplacement, df[subset, col]))
-    friendlyExpression <- paste(expressionParseTree[2], expressionParseTree[1], expressionParseTree[3])
+    subset.string <- deparse(subset, width.cutoff = 500L, control = "warnIncomplete")
+    sentence <- paste0(dfname,"[",subset.string,", \"",colname,"\"] <- sub(\"",
+                              replacePattern,"\", \"", escapeBS(replacement), "\", ",dfname,"[",subset.string,", \"",colname,"\"])")
+    expression <- parse(text = sentence)
+    before <- get(dfname)[subset, colname]
+    after <-  sub(replacePattern, replacement, before)
     if (explain) {
-        message("It would affect ", rows, " row(s) with the sentence: \n\n", friendlyExpression, "\n")
-        explainResults <- sub(escapedPattern, finalReplacement, df[subset, col])
-        if (verbose)
-            print(paste(paste0('"', df[subset, col], '"'),
-                        paste0('"', explainResults, '"'),
-                        sep = " <- "), quote = FALSE)
-        return(invisible(explainResults))
-    } else {
-        eval.parent(expressionParseTree)
+        message("It would affect ", rows, " row(s) with the sentence: ", sentence, "\n")
         if (verbose) {
-            message("It was affected ", rows, " row(s) with the sentence: \n\n", friendlyExpression, "\n")
-            return(eval.parent(substitute(df[subset, col])))
-        } else
-            return(invisible(eval.parent(substitute(df[subset, col]))))
+            message("The detailed value changes would be:\n")
+            print(paste(paste0('"', before, '"'), paste0('"', after, '"'),sep = " <- "), quote = FALSE)
+        }
+        return(invisible(after))
+    } else {
+        eval(expression, envir)
+        if (verbose) {
+            message("It was affected ", rows, " row(s) with the sentence: ", sentence, "\n")
+            message("The detailed value changes were:\n")
+            print(paste(paste0('"', before, '"'), paste0('"', get(dfname, envir)[subset, colname] , '"'),sep = " <- "), quote = FALSE)
+        } 
+        return(invisible(get(dfname, envir)[subset, colname]))
+    }
+}
+
+escapeBS <- function(string) {
+    gsub('\\\\', '\\\\\\\\\\', string)
+}
+
+escapeRegex <- function(string) {
+    gsub('([.|()\\^{}+$*?]|\\[|\\])', '\\\\\\1', string)
+}
+
+to_env <- function(x, quiet = FALSE) {
+    if (is.environment(x)) {
+        x
+    } else if (is.list(x)) {
+        list2env(x)
+    } else if (is.function(x)) {
+        environment(x)
+    } else if (length(x) == 1 && is.character(x)) {
+        if (!quiet) message("Using environment ", x)
+        as.environment(x)
+    } else if (length(x) == 1 && is.numeric(x) && x > 0) {
+        if (!quiet) message("Using environment ", search()[x])
+        as.environment(x)
+    } else {
+        stop("Input can not be coerced to an environment", call. = FALSE)
+    }
+}
+
+where <- function(name, env = parent.frame()) {
+    stopifnot(is.character(name), length(name) == 1)
+    env <- to_env(env)
+    
+    if (identical(env, emptyenv())) {
+        stop("Can't find ", name, call. = FALSE)
+    }
+    
+    if (exists(name, env, inherits = FALSE)) {
+        env
+    } else {
+        where(name, parent.env(env))
     }
 }

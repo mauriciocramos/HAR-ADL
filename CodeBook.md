@@ -1,238 +1,213 @@
-HAR-analysis
+CodeBook
 ================
 by Maurício Collaça
-on 2017-01-27
+on 2017-02-01
 
-Human Activity Recognition (HAR) analysis Code Book
----------------------------------------------------
+This code book modifies and updates the available codebooks with the data to indicate all variables and summaries calculated, units, transformations, work performed to clean up, tidy, process and display of the data and any other relevant information.
 
-This code book describes all the variables and summaries calculated, along with units, any transformations or work performed to clean up the data and any other relevant information about the Human Activity Recognition (HAR) using smartphones Data Set Version 1.0.
+Data set source
+---------------
 
-The purpose of this project is to collect, tidy, filter and produce some statistics of the HAR data set, outputing a new tidy data set file.
+The data set used in this project is from the University of California Irvine (UCI) Machine Learning Repository: Human Activity Recognition Using Smartphones Data Set Version 1.0. The data set represents data collected from 30 subjects performing activities of daily living (ADL) while carrying a waist-mounted Samsung Galaxy S smartphone with embedded accelerometer and gyroscope inertial sensors. The original documentation is available [here](http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones).
 
-The data set used in the project is from the University of California Irvine (UCI) Machine Learning Repository: Human Activity Recognition Using Smartphones Data Set Version 1.0. The data set represent data collected from the embedded accelerometer and gyroscope of the Samsung Galaxy S smartphone. A full description is available at:
-
-<http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones>
-
-The data set for the project:
-
-Mirror site:
-<https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip>
-Original site:
-<http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip>
+The data set for this project is available at [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) or [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip).
 
 Data set description
 --------------------
 
 Abstract: Human Activity Recognition database built from the recordings of 30 subjects performing activities of daily living (ADL) while carrying a waist-mounted smartphone with embedded inertial sensors.
 
-Data Set Characteristics: **Multivariate, Time-Series**
-Number of Instances: **10299**
-Number of Attributes: **561**
-Associated Tasks: **Classification, Clustering**
-Missing Values? **N/A**
+Data Set Characteristics: Multivariate, Time-Series
+Number of Instances: 10299
+Number of Attributes: 561
+Associated Tasks: Classification, Clustering
+Missing Values? N/A
 
-### Data Set information
+Data Set information
+--------------------
 
-The experiments have been carried out with a group of 30 volunteers
+The experiments have been carried out with a group of 30 volunteers within an age bracket of 19-48 years. Each person performed six activities (WALKING, WALKING\_UPSTAIRS, WALKING\_DOWNSTAIRS, SITTING, STANDING, LAYING) wearing a smartphone (Samsung Galaxy S II) on the waist. Using its embedded accelerometer and gyroscope, There were captured 3-axial linear acceleration and 3-axial angular velocity at a constant rate of 50Hz (50 captures/second). The experiments have been video-recorded to label the data manually. The obtained dataset has been randomly partitioned into two sets, where 70% (21 volunteers) was selected for generating the training data and 30% (9 volunteers) for the test data.
 
-Each person performed six activities (WALKING, WALKING\_UPSTAIRS, WALKING\_DOWNSTAIRS, SITTING, STANDING, LAYING)
+The sensor signals (accelerometer and gyroscope) were pre-processed by applying noise filters and then sampled in fixed-width sliding windows of 2.56 sec and 50% overlap (128 readings/window). The sensor acceleration signal, which has gravitational and body motion components, was separated using a Butterworth low-pass filter into body acceleration and gravity. The gravitational force is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used. From each window, a vector of 561 features was obtained by calculating variables from the time and frequency domains.
 
-Captured 3-axial **linear acceleration** and 3-axial **angular velocity** at a constant rate of 50Hz (50 captures/second).
+A video of the experiment including an example of the 6 recorded activities with one of the participants can be seen [here](http://www.youtube.com/watch?v=XOEN9W05_4A).
 
-The obtained dataset has been randomly partitioned into two sets of volunteers, where 70% (9 volunteers) were selected for generating the training data and 30% (21 volunteers) the test data.
-
-The sensor signals were pre-processed in 128 readings/window.
-
-The sensor **acceleration signal**, which has gravitational and body motion components, was separated into **body acceleration** and **gravity**.
-
-The **gravitational force** is assumed to have only low frequency components, therefore a filter with 0.3 Hz cutoff frequency was used.
-
-From each **window of 120 readings**, a **vector of features** was obtained by calculating **variables** from the **time (t) and frequency (f) domains**.
-
-### Attribute Information
+Attribute Information
+---------------------
 
 For each record in the dataset it is provided:
-- Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
-- Triaxial Angular velocity from the gyroscope.
-- A 561-feature vector with time and frequency domain variables.
-- Its activity label.
-- An identifier of the subject who carried out the experiment.
 
-### Feature Selection
+-   Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
+-   Triaxial Angular velocity from the gyroscope.
+-   A 561-feature vector with time and frequency domain variables.
+-   Its activity label.
+-   An identifier of the subject who carried out the experiment.
 
-The features selected for this database come from the accelerometer and gyroscope 3-axial raw signals **tAcc-XYZ (linear acceleration)** and **tGyro-XYZ (angular velocity)**. These **time domain signals** (prefix 't' to denote time) were **captured at a constant rate of 50 Hz**. Then they were filtered using a **median filter** and a **3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise**. Similarly, the **acceleration signal** was then separated into **body and gravity acceleration signals** (tBodyAcc-XYZ and tGravityAcc-XYZ) using another **low pass Butterworth filter with a corner frequency of 0.3 Hz**.
-
-Subsequently, the **body linear acceleration** and **angular velocity** were **derived in time to obtain Jerk signals** (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the **magnitude of these three-dimensional signals were calculated using the Euclidean norm** (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag).
-
-Finally a Fast Fourier Transform (FFT) was applied to **some** of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate **frequency domain signals**).
-
-One can conclude there are **eight** 3-axial signals and **nine** magnitude signals.
-
-These 33 signals were used to estimate variables of the feature vector for each pattern.
-
-**'-XYZ'** is used to denote **3-axial signals** in the **X, Y and Z** directions.
-
--   tBodyAcc-**XYZ**
--   tGravityAcc-**XYZ**
--   tBodyAccJerk-**XYZ**
--   tBodyGyro-**XYZ**
--   tBodyGyroJerk-**XYZ**
--   fBodyAcc-**XYZ**
--   fBodyAccJerk-**XYZ**
--   fBodyGyro-**XYZ**
-
-**'Mag'** is used to denote **magnitude signals**
-
--   tBodyAcc**Mag**
--   tGravityAcc**Mag**
--   tBodyAccJerk**Mag**
--   tBodyGyro**Mag**
--   tBodyGyroJerk**Mag**
--   fBodyAcc**Mag**
--   fBodyAccJerk**Mag**
--   fBodyGyro**Mag**
--   fBodyGyroJerk**Mag**
-
-There are seventeen (17) variables that were estimated from these signals.
-
-Some variables apply to **all 33 signals**
-- mean(): Mean value
-- std(): Standard deviation
-- mad(): Median absolute deviation
-- max(): Largest value in array
-- min(): Smallest value in array
-- energy(): Energy measure. Sum of the squares divided by the number of values.
-- iqr(): Interquartile range
-- entropy(): Signal entropy
-
-Some variables apply to **magnitude signals** only - sma(): Signal magnitude area
-
-Some variables apply to a specific group only: tBodyAcc-XYZ, tGravityAcc-XYZ, tBodyAccJerk-XYZ, tBodyGyro-XYZ, tBodyGyroJerk-XYZ, tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag
-
--   arCoeff(): Autorregresion coefficients with Burg order equal to 4
-
-Some variables apply to a specific group only: tBodyAcc-XYZ, tBodyAccJerk-XYZ, tBodyGyro-XYZ, tBodyGyroJerk-XYZ, tGravityAcc-XYZ
-
--   correlation(): correlation coefficient between two signals
-
-Some variables apply to a specific group only: fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyAccMag, fBodyBodyAccJerkMag, fBodyBodyGyroJerkMag, fBodyBodyGyroMag, fBodyGyro-XYZ
-
--   maxInds(): index of the frequency component with largest magnitude
-
-Some variables apply to a specific group only: fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyAccMag, fBodyBodyAccJerkMag, fBodyBodyGyroJerkMag, fBodyBodyGyroMag, fBodyGyro-XYZ,
-
--   meanFreq(): Weighted average of the frequency components to obtain a mean frequency
-
-Some variables apply to a specific group only: fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyAccMag, fBodyBodyAccJerkMag, fBodyBodyGyroJerkMag, fBodyBodyGyroMag, fBodyGyro-XYZ
-
--   skewness(): skewness of the frequency domain signal
--   kurtosis(): kurtosis of the frequency domain signal
-
-Some variables apply to a specific group only: fBodyAcc-???, fBodyAccJerk-???, fBodyGyro-???
-
--   bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window.
-
-Some variables apply to a specific group of two vectors: (tBodyAccJerkMean),gravityMean), (tBodyAccMean,gravity), (tBodyGyroJerkMean,gravityMean), (tBodyGyroMean,gravityMean), (X,gravityMean), (Y,gravityMean), (Z,gravityMean)
-
--   angle(): Angle between tWo vectors.
-
-Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable:
-
--   gravityMean used in the variable angles() for the features:
-
-    angle(tBodyAccJerkMean),gravityMean) angle(tBodyGyroJerkMean,gravityMean) angle(tBodyGyroMean,gravityMean) angle(X,gravityMean) angle(Y,gravityMean) angle(Z,gravityMean)
-
--   tBodyAccMean used in the variable angles() for the feature: angle(tBodyAccMean,gravity)
-
--   tBodyAccJerkMean used in the variable angles() for the feature: angle(tBodyAccJerkMean),gravityMean)
-
--   tBodyGyroMean used in the variable angles() for the feature: angle(tBodyGyroMean,gravityMean)
-
--   tBodyGyroJerkMean in the variable angles() for the feature: angle(tBodyGyroJerkMean,gravityMean)
-
-Data folders
-------------
-
-Source: <http://archive.ics.uci.edu/ml/machine-learning-databases/00240/>
-
-### Notes
+Notes
+-----
 
 -   Features are normalized and bounded within \[-1,1\].
 -   Each feature vector is a row on the text file.
--   The units used for the accelerations (total and body) are 'g's (gravity of Earth -&gt; 9.80665 m/seg2).
--   The gyroscope units are rad/seg.
+-   The accelerometer units used for the acceleration signals (total and body) are 'g's (gravity of Earth -&gt; 9.80665 m/seg2).
+-   The gyroscope units are radians/second.
 
-### For the overall data set it is provided
+Data set files
+--------------
 
--   Information about the variables used on the feature vector. Shows information about the variables used on the feature vector.
+### For the overall data set it is provided:
 
-    ./HAR-analysis/UCI HAR Dataset/features\_info.txt
+`features_info.txt` - Information about the signals and calculus used to estimate variables of the feature vector.
+`features.txt` - List of the 516 feature identifiers and names.
+`activity_labels.txt` - List of the 6 activity identifiers and names
 
--   List of all features.
+### For both partitions of the data set (trainning and test sets) it is provided:
 
-    ./HAR-analysis/UCI HAR Dataset/features.txt
+561-feature vector with time and frequency domain variables for each window sample.
 
--   Links the class labels with their activity name
+`train/X_train.txt`
+`test/X_test.txt`
 
-    ./HAR-analysis/UCI HAR Dataset/activity\_labels.txt
+Activity identifiers for each window sample.
 
-### For each record of the data set it is provided
+`train/y_train.txt`
+`test/y_test.txt`
 
--   A 561-feature vector with time and frequency domain variables.
+Identifiers of the subjects who carried out the experiment. Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30.
 
-    ./HAR-analysis/UCI HAR Dataset/**train**/X\_train.txt
-    ./HAR-analysis/UCI HAR Dataset/**test**/X\_test.txt
+`train/subject_train.txt`
+`test/subject_test.txt`
 
--   Its activity label.
+Acceleration signal (total acceleration) from the smartphone accelerometer for the X, Y and Z axis in standard gravity units 'g'. Each row is a window sample with a 128 element vector.
 
-    ./HAR-analysis/UCI HAR Dataset/**train**/y\_train.txt
-    ./HAR-analysis/UCI HAR Dataset/**test**/y\_test.txt
+`train/Inertial Signals/total_acc_x_train.txt`
+`train/Inertial Signals/total_acc_y_train.txt`
+`train/Inertial Signals/total_acc_z_train.txt`
+`test/Inertial Signals/total_acc_x_test.txt`
+`test/Inertial Signals/total_acc_y_test.txt`
+`test/Inertial Signals/total_acc_z_test.txt`
 
--   An identifier of the subject who carried out the experiment. Each row identifies the subject who performed the activity for each window sample. Its range is from 1 to 30.
+Estimated body acceleration from the acellerometer obtained by subtracting the gravity from the total acceleration for the X, Y and Z axis. Each row is a window sample with a 128 element vector.
 
-    ./HAR-analysis/UCI HAR Dataset/**train**/subject\_train.txt
-    ./HAR-analysis/UCI HAR Dataset/**test**/subject\_test.txt
+`train/Inertial Signals/body_acc_x_train.txt`
+`train/Inertial Signals/body_acc_y_train.txt`
+`train/Inertial Signals/body_acc_z_train.txt`
+`test/Inertial Signals/body_acc_x_test.txt`
+`test/Inertial Signals/body_acc_y_test.txt`
+`test/Inertial Signals/body_acc_z_test.txt`
 
--   Triaxial acceleration from the accelerometer (total acceleration) and the estimated body acceleration.
+Angular velocity measured by the smartphone gyroscope for the X, Y and Z axis in radians/second units. Each row is a window sample with a 128 element vector.
 
-    -   The acceleration signal from the smartphone accelerometer for the X, Y and Z axis in standard gravity units 'g'. Every row shows a 128 element vector.
+`train/Inertial Signals/body_gyro_x_train.txt`
+`train/Inertial Signals/body_gyro_y_train.txt`
+`train/Inertial Signals/body_gyro_z_train.txt`
+`test/Inertial Signals/body_gyro_x_test.txt`
+`test/Inertial Signals/body_gyro_y_test.txt`
+`test/Inertial Signals/body_gyro_z_test.txt`
 
-        ./HAR-analysis/UCI HAR Dataset/**train**/Inertial Signals/
-        total\_acc\_**x\_train**.txt
-        total\_acc\_**y\_train**.txt
-        total\_acc\_**z\_train**.txt
-        ./HAR-analysis/UCI HAR Dataset/**test**/Inertial Signals/
-        total\_acc\_**x\_test**.txt
-        total\_acc\_**y\_test**.txt
-        total\_acc\_**z\_test**.txt
+Feature Selection
+-----------------
 
-    -   The body acceleration signal obtained by subtracting the gravity from the total acceleration for the X, Y and Z axis.
+The features selected for this data set come from the accelerometer and gyroscope 3-axial raw signals `tAcc-XYZ` (total acceleration) and `tGyro-XYZ` (angular velocity). These time domain signals (prefix `t` to denote time) were captured at a constant rate of 50 Hz (50 captures/second). Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body acceleration signal `tBodyAcc-XYZ` and gravity acceleration signal `tGravityAcc-XYZ` using another low pass Butterworth filter with a corner frequency of 0.3 Hz.
 
-        ./HAR-analysis/UCI HAR Dataset/**train**/Inertial Signals/
-        body\_acc\_**x\_train**.txt
-        body\_acc\_**y\_train**.txt
-        body\_acc\_**z\_train**.txt ./HAR-analysis/UCI HAR Dataset/**test**/Inertial Signals/
-        body\_acc\_**x\_test**.txt
-        body\_acc\_**y\_test**.txt
-        body\_acc\_**z\_test**.txt
+Subsequently, the body linear acceleration `tBodyAcc-XYZ` and angular velocity `tGyro-XYZ` were derived in time to obtain Jerk signals `tBodyAccJerk-XYZ` and `tBodyGyroJerk-XYZ`. Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm: `tBodyAccMag`, `tGravityAccMag`, `tBodyAccJerkMag`, `tBodyGyroMag`, `tBodyGyroJerkMag`.
 
--   Triaxial Angular velocity from the gyroscope for the X, Y and Z axis. The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second.
+Finally a Fast Fourier Transform (FFT) was applied to some of these time domain signals producing frequency domain signals (prefix `f` to denote frequency): `fBodyAcc-XYZ`, `fBodyAccJerk-XYZ`, `fBodyGyro-XYZ`, `fBodyAccJerkMag`, `fBodyGyroMag`, `fBodyGyroJerkMag`.
 
-    ./HAR-analysis/UCI HAR Dataset/**train**/Inertial Signals/
-    body\_gyro\_**x\_train**.txt
-    body\_gyro\_**y\_train**.txt
-    body\_gyro\_**z\_train**.txt
-    ./HAR-analysis/UCI HAR Dataset/**test**/Inertial Signals/
-    body\_gyro\_**x\_test**.txt
-    body\_gyro\_**y\_test**.txt
-    body\_gyro\_**z\_test**.txt
+One can conclude there are eight 3-axial signals and nine magnitude signals totalling 33 signals. These overall 33 signals were used to estimate variables of the feature vector for each pattern.
 
-Variables selected for analysis
--------------------------------
+`-XYZ` is used to denote 3-axial signals in the `X`, `Y` and `Z` directions.
 
-Data
-----
+`tBodyAcc-XYZ`
+`tGravityAcc-XYZ`
+`tBodyAccJerk-XYZ`
+`tBodyGyro-XYZ`
+`tBodyGyroJerk-XYZ`
+`fBodyAcc-XYZ`
+`fBodyAccJerk-XYZ`
+`fBodyGyro-XYZ`
+
+`Mag` is used to denote magnitude signals.
+
+`tBodyAccMag`
+`tGravityAccMag`
+`tBodyAccJerkMag`
+`tBodyGyroMag`
+`tBodyGyroJerkMag`
+`fBodyAccMag`
+`fBodyAccJerkMag`
+`fBodyGyroMag`
+`fBodyGyroJerkMag`
+
+The following chart illustrates the feature selection. Click [here](https://github.com/mauriciocramos/HAR-analysis/raw/master/HAR-feature-selection.png) to enlarge.
+
+![Feature Selection](HAR-feature-selection.png)
+
+### Feature variables (calculus)
+
+There are seventeen (17) variables (calculus) that were estimated from these signals:
+
+    ##  [1] "mean(): Mean value"                                                                         
+    ##  [2] "std(): Standard deviation"                                                                  
+    ##  [3] "mad(): Median absolute deviation"                                                           
+    ##  [4] "max(): Largest value in array"                                                              
+    ##  [5] "min(): Smallest value in array"                                                             
+    ##  [6] "sma(): Signal magnitude area"                                                               
+    ##  [7] "energy(): Energy measure. Sum of the squares divided by the number of values."              
+    ##  [8] "iqr(): Interquartile range"                                                                 
+    ##  [9] "entropy(): Signal entropy"                                                                  
+    ## [10] "arCoeff(): Autorregresion coefficients with Burg order equal to 4"                          
+    ## [11] "correlation(): correlation coefficient between two signals"                                 
+    ## [12] "maxInds(): index of the frequency component with largest magnitude"                         
+    ## [13] "meanFreq(): Weighted average of the frequency components to obtain a mean frequency"        
+    ## [14] "skewness(): skewness of the frequency domain signal"                                        
+    ## [15] "kurtosis(): kurtosis of the frequency domain signal"                                        
+    ## [16] "bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window."
+    ## [17] "angle(): Angle between to vectors."
+
+### Vectors for angle calculus
+
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable.
+
+``` r
+angleVectors <- read_angleVectors()
+angleVectors
+```
+
+    ##                name
+    ## 1       gravityMean
+    ## 2      tBodyAccMean
+    ## 3  tBodyAccJerkMean
+    ## 4     tBodyGyroMean
+    ## 5 tBodyGyroJerkMean
+
+Variables and summaries calculated
+----------------------------------
+
+Following the project requirements:
+
+> 1 - Merges the training and the test sets to create one data set.
+
+The data.frame object `dataset` is created and contains the merging of the training sets (`X_train.txt`, `y_train.txt`, `subject_train.txt`) and test tests (`X_test.txt`, `y_test.txt`, `subject_test.txt`)
+
+> 2 - Extracts only the measurements on the mean and standard deviation for each measurement.
+
+The data.frame object `features` contains the `features.txt`
+
+The data.frame object `dataset` is subsetted based on the column `dataset$feature` whose identifier values match the column `features$id` whose `feature$name` contains substrings `"mean()"`, `"meanFreq()"` and `"std()"`.
+
+> 3 - Uses descriptive activity names to name the activities in the data set
+
+The data.frame object `activity_labels` contains the `activity_labels.txt`
+
+The data.frame object `dataset` is mutated by replacing the activity identifier value in the column `dataset$activity` by the activity name value from the column `activity_labels$name`.
+
+> 4 - Appropriately labels the data set with descriptive variable names.
+
+The data.frame object `dataset` is mutated by replacing the feature identifier value in the column `dataset$feature` by the feature name value from the column `features$name`.
+
+> 5 - From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+The data.frame object `averages` is created by grouping the columns `subject`, `activity` and `feature` from the data.frame `dataset` and calculating the mean of the column `dataset$value` in the column `averages$average`
 
 General information about the environment used
 ----------------------------------------------
@@ -283,28 +258,100 @@ packageVersion("tidyr")
 
 With this hardware and software configuration, the `run_analysis.R` takes around 55 seconds to complete at the first time, because it also includes the downloading and uncompressing tasks. That time also depends on the internet connection to the <https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip> at running time.
 
-`system.time(source("run_analysis.R"))`
+``` r
+unlink("Dataset.zip")
+unlink("UCI HAR Dataset", recursive = TRUE, force = TRUE)
+system.time({
+    sink(file = "run_analysis.log")
+    suppressMessages(source("run_analysis.R"))
+    sink()
+})
+```
 
-     user  system elapsed
-    17.86    7.71   54.25
+    ##    user  system elapsed 
+    ##   17.17    2.11   51.09
 
-On the next times you run it, there won't be any download and uncompressing tasks and it would take around 14 seconds.
+In the next times you run it, there won't be any download and uncompressing tasks and it would take around 14 seconds.
 
-`system.time(source("run_analysis.R"))`
+``` r
+system.time({
+    sink(file = "run_analysis.log")
+    suppressMessages(source("run_analysis.R"))
+    sink()
+})
+```
 
-     user  system elapsed
-    12.85    0.36   13.36
+    ##    user  system elapsed 
+    ##   13.10    0.41   13.51
 
-Requirements to run the script [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script
------------------------------------------------------------------------------------------------------------------------------------
+Installation, running and evaluation instructions
+-------------------------------------------------
 
-1.  Install R packages {dplyr} and {tidyr}.
-2.  Download both `run_analysis.R` and `HAR-utils.R` in some local working directory
-3.  Open `R` or `RStudio`
-4.  Go to the directory where the scripts were download, for instance, `setwd("your-directory-here")`
-5.  Run the command: `source("run_analysis.R")`
-6.  ...results in the console
-7.  final result either in ... or ...
+1.  If you still haven't done it, install R available at [The R Foundation](https://www.r-project.org/). This project used R version 3.3.2 (2016-10-31).
+2.  Optionally, you may use RStudio as well, available at [RStudio](https://www.rstudio.com/). This project used RStudio Desktop version 1.0.136.
+3.  If you still haven't done it, install additional R packages `{dplyr}` and `{tidyr}`. The easiest way to do that is via R (menu Packages &gt; Install Package(s)...) or RStudio (menu Tools &gt; Install packages...). This project used `{dplyr}` version 0.5.0 and `{tidr}` version 0.6.1.
+4.  Download only [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/run_analysis.R) and [HAR-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R) in some local working directory of your preference. The other files (i.e. \*.md files) are not necessary to download for your evaluation as they are rendered by GitHub website. If you download them you would need Rstudio to view/render them in your computer.
+5.  Optionally, download the `Dataset.zip` from [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) or [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip) in the same local working directory but the script will do that for your convenience.
+6.  Open `R` or `RStudio`
+7.  Go to the directory where the scripts were download using the command `setwd("your-directory-here")`
+8.  Run the command: `source("run_analysis.R")`. At this point the script will download the `Dataset.zip` if necessary, uncompress it, start the data processing and display the results.
+
+The script will display a series of messages and summary results for each project requirement in the R/Rstudio Console, easying your evaluation:
+
+``` r
+source("run_analysis.R")
+```
+
+    ## 1. Merges the training and the test sets to create one data set.
+
+    ## 'data.frame':    5777739 obs. of  4 variables:
+    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ activity: int  5 5 5 5 5 5 5 5 5 5 ...
+    ##  $ feature : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ value   : num  0.289 0.278 0.28 0.279 0.277 ...
+
+    ## 2. Extracts only the measurements on the mean and standard deviation for each measurement.
+
+    ## 'data.frame':    813621 obs. of  4 variables:
+    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ activity: int  5 5 5 5 5 5 5 5 5 5 ...
+    ##  $ feature : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ value   : num  0.289 0.278 0.28 0.279 0.277 ...
+
+    ## 3. Uses descriptive activity names to name the activities in the data set
+
+    ## 'data.frame':    813621 obs. of  4 variables:
+    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ activity: chr  "STANDING" "STANDING" "STANDING" "STANDING" ...
+    ##  $ feature : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ value   : num  0.289 0.278 0.28 0.279 0.277 ...
+
+    ## 4. Appropriately labels the data set with descriptive variable names.
+
+    ## 'data.frame':    813621 obs. of  4 variables:
+    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ activity: chr  "STANDING" "STANDING" "STANDING" "STANDING" ...
+    ##  $ feature : chr  "tBodyAcc-mean()-X" "tBodyAcc-mean()-X" "tBodyAcc-mean()-X" "tBodyAcc-mean()-X" ...
+    ##  $ value   : num  0.289 0.278 0.28 0.279 0.277 ...
+
+    ## 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+    ## 'data.frame':    14220 obs. of  4 variables:
+    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
+    ##  $ activity: chr  "LAYING" "LAYING" "LAYING" "LAYING" ...
+    ##  $ feature : chr  "fBodyAcc-mean()-X" "fBodyAcc-mean()-Y" "fBodyAcc-mean()-Z" "fBodyAcc-meanFreq()-X" ...
+    ##  $ average : num  -0.9391 -0.8671 -0.8827 -0.1588 0.0975 ...
+
+In the last requirement, the final data set `averages` is summarized in the Console, its content is saved in the file `averages.txt` on your local working directory and also opened in detail in window `View()` for your convenience by the script itself.
+
+You may check out this data set by in many ways:
+
+`print(averages)`
+`View(averages)`
+`browseURL("averages.txt")`
+`View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))`
+
+If you still haven't run the script, you may preview the `averages.txt` [here](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt).
 
 Transformations
 ---------------
@@ -325,33 +372,46 @@ The `{dplyr}` functions `group_by()` and `summarize()` are used with the functio
 library(dplyr)
 ```
 
-    ## 
-    ## Attaching package: 'dplyr'
-
-    ## The following objects are masked from 'package:stats':
-    ## 
-    ##     filter, lag
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     intersect, setdiff, setequal, union
-
 The `{tidyr}` function `gather()` is used to take multiple columns and collapses into key-value pairs, duplicating all other columns as needed.
 
 ``` r
 library(tidyr)
 ```
 
-The script downloads the zip file `Dataset.zip` into your working directory only once, unless you delete it, letting the script download it again.
+As mentioned above, in order to encapsulate code and improve the reusability and the readability of the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script, the file reading helper functions were written in a separate R script called [HAR-utils.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-utils.R).
+
+In case you forgot to download the [HAR-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R), the [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/run_analysis.R) will automatically download it for your convenience.
+
+``` r
+if(!file.exists("HAR-utils.R"))
+    download.file("https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R",
+                  "HAR-utils.R",
+                  quiet = TRUE)
+source("HAR-utils.R")
+```
+
+It's not necessary to read the `HAR-utils.R` source code in order to understand the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R).
+
+These functions loads the data set files into R `data.frame` objects:
+
+`read_feature()` reads the `features.txt`
+`read_activity_labels()` reads the `activity_labels.txt`
+`read_X()` reads either `X_train.txt` or `X_test.txt`
+`read_y()` reads either `y_train.txt` or `y_test.txt`
+`read_subject()` reads either `subject_train.txt` or `subject_test.txt`
+
+The script downloads the zip file `Dataset.zip` into your working directory only once, unless you delete it, letting the script download it again in the next time you run it.
 
 ``` r
 url <- 
 'https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip'
 destfile = 'Dataset.zip'
-if(!file.exists(destfile)) { download.file(url, destfile, mode = "wb") }
+if(!file.exists(destfile)) {
+    download.file(url, destfile, mode = "wb", cacheOK = FALSE, quiet = TRUE)
+}
 ```
 
-The zip file `Dataset.zip` contains a subdirectory structure and multiple files that `run_analysis.R` needs to read. The following command displays those files:
+The zip file `Dataset.zip` contains a subdirectory structure and multiple files that `run_analysis.R` needs to read as explained before. The following command displays those files:
 
 ``` r
 unzip(zipfile = "Dataset.zip", list = TRUE)[c(1:2,16:18,30:32),1]
@@ -366,43 +426,13 @@ unzip(zipfile = "Dataset.zip", list = TRUE)[c(1:2,16:18,30:32),1]
     ## [7] "UCI HAR Dataset/train/X_train.txt"      
     ## [8] "UCI HAR Dataset/train/y_train.txt"
 
-`features.txt` is the list of the 561 feature names produced by the experiment.
-
-`activity_labels.txt` is the list of the six activities carried out in the experiment. Each row contains an activity identifier and a label.
-
-`X_train.txt` is the trainning observation set of the experiment. Each row contains a 561-feature vector with time and frequency domain variables.
-
-`X_test.txt` is the test observation set of the experiment. Each row contains a 561-feature vector with time and frequency domain variables.
-
-`y_train.txt` contains the identifiers of the activities associated with the trainning observation set.
-
-`y_test.txt` contains the identifiers of the activities associated with the test observation set.
-
-`subject_train.txt` contains the identifiers of the subjects who carried out the trainning activities of the experiment. Each row identifies the subject who performed the activity for each window sample.
-
-`subject_test.txt` contains the identifiers of the subjects who carried out the trainning activities of the experiment. Each row identifies the subject who performed the activity for each window sample.
-
-The script uncompress the zip file `Dataset.zip` into the the folder `UCI HAR Dataset` of the working directory only once, unless you delete this folder, letting the script uncompress the zip file again:
+The script uncompress the zip file `Dataset.zip` into the the folder `UCI HAR Dataset` of the working directory only once, unless you delete this folder, letting the script uncompress the zip file again in the next time you run it:
 
 ``` r
-if(!dir.exists("UCI HAR Dataset")) { unzip(destfile, setTimes = TRUE) }
+if(!dir.exists("UCI HAR Dataset")) {
+    unzip(destfile, setTimes = TRUE)
+}
 ```
-
-As mentioned above, in order to encapsulate code and improve the reusability and the readability of the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script, the file reading helper functions were written in a separate R script called [HAR-utils.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-utils.R).
-
-``` r
-source("HAR-utils.R")
-```
-
-It's not necessary to read the `HAR-utils.R` source code in order to understand the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R).
-
-These functions loads the data set files into R `data.frame` objects:
-
-`read_feature()` reads the `features.txt`
-`read_activity_labels()` reads the `activity_labels.txt`
-`read_X()` reads either `X_train.txt` or `X_test.txt`
-`read_y()` reads either `y_train.txt` or `y_test.txt`
-`read_subject()` reads either `subject_train.txt` or `subject_test.txt`
 
 ### 1. Merges the training and the test sets to create one data set.
 
@@ -509,14 +539,14 @@ According to the `features_info.txt`, there are other vectors that, although mea
 > angle(Y,gravityMean)
 > angle(Z,gravityMean)
 
-Thus, these `angle()` variables will not be extracted to fullfill the requirement \#2 because the atomic unit in the dataset is the `feature` and not an implicit `vector` that may composes a `feature`.
+These `angle()` variables will not be extracted to fullfill the requirement \#2 because their features are not means or standard deviations.
 
-After all this reasoning and for the sake of the completeness, it is assumed that either `mean()` and `meanFreq()` and `std()` represent valid feature variables (substrings) to fullfill the requirement \#2.
+After all this reasoning and for the sake of the completeness, it is assumed that either `mean()` and `meanFreq()` and `std()` represent valid feature variables to fullfill the requirement \#2.
 
 Create a regular expression filter to subset the feature ids required, considering the substrings `mean()`, `meanFreq()` and `std()`
 
 ``` r
-features<-read_features()
+features <- read_features()
 selectedFeatureIds <- features[grep("(mean|meanFreq|std)\\(\\)",features$name), 1]
 ```
 
@@ -615,9 +645,16 @@ For the peer reviewing of the file [`averages.txt`](https://github.com/mauricioc
 View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))
 ```
 
+You may check out this data set by in many ways:
+
+`print(averages)`
+`View(averages)`
+`browseURL("averages.txt")`
+`View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))`
+
+If you still haven't run the script, you may preview the `averages.txt` [here](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt).
+
 Acknowledgment
 --------------
 
-\[1\] Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013.
-
-This dataset is distributed AS-IS and no responsibility implied or explicit can be addressed to the authors or their institutions for its use or misuse. Any commercial use is prohibited.
+Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013.

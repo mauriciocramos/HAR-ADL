@@ -1,10 +1,113 @@
-HAR-features
+HAR-analysis
 ================
 by Maurício Collaça
-on 2017-01-26
+on 2017-02-01
+
+Analysis of the Human Activity Recognition (HAR) Using Smartphones Data Set
+---------------------------------------------------------------------------
+
+Abstract: Analysis of the Human Activity Recognition database built from the recordings of 30 subjects performing activities of daily living (ADL) while carrying a waist-mounted smartphone with embedded inertial sensors.
 
 Introduction
 ------------
+
+Activity recognition aims to recognize the actions and goals of one or more agents from a series of observations on the agents' actions and the environmental conditions. Since the 1980s, this research field has captured the attention of several computer science communities due to its strength in providing personalized support for many different applications and its connection to many different fields of study such as medicine, human-computer interaction, or sociology. (Wikipedia, 2016).
+
+Due to its many-faceted nature, different fields may refer to activity recognition as plan recognition, goal recognition, intent recognition, behavior recognition, location estimation and location-based services.
+
+### Layers of sensor-based activity recognition
+
+Sensor-based activity recognition is a challenging task due to the inherent noisy nature of the sensor's data. Thus, statistical modeling has been the main thrust in this direction in layers, where the recognition at several intermediate levels is conducted and connected.
+
+#### Layer 1 - Agent location and environmental conditions
+
+At the lowest level where the sensor data are collected, statistical learning concerns how to find the detailed locations and inertial signals of agents from the received signal data of sensors such as GPS, Accelerometer and Gyroscope.
+
+#### Layer 2 - Agent activity recognition
+
+At an intermediate level, statistical inference may be concerned about how to recognize individuals' activities from the inferred location sequences, environmental conditions and intertial signals at the lower levels.
+
+#### Layer 3 - Behaviours, Plan, Goals and Intent recognition
+
+Furthermore, at the highest level a major concern is to find out the overall behaviours, plans, goals or subgoals of an agent from the activity sequences through a mixture of logical and statistical reasoning.
+
+Scientific conferences where activity recognition work from wearable and environmental often appears are the International Symposium on Wearable Computers (ISWC) and the Association for Computing Machinery's (ACM) International Joint Conference on Pervasive Computting (UbiComp).
+
+### Types of sensor-based activity recognition
+
+The types of sensor-based activity recognition includes single-user, multi-user and group.
+
+#### Single user activity recognition
+
+Sensor-based, single-user activity recognition integrates the emerging area of sensor networks with novel data mining and machine learning techniques to model a wide range of human activities. (Tanzeem Choudhury, Gaetano Borriello, et al., 2008), (Nishkam Ravi, Nikhil Dandekar, Preetham Mysore, Michael Littman., 2005). Mobile devices (e.g. smart phones) provide sufficient sensor data and calculation power to enable physical activity recognition to provide an estimation of the energy consumption during everyday life. Sensor-based activity recognition researchers believe that by empowering ubiquitous computers and sensors to monitor the behavior of agents (under consent), these computers will be better suited to act on our behalf.
+
+#### Multi-user activity recognition
+
+Recognizing activities for multiple users using on-body sensors first appeared in the work by Olivetti Research Ltd (ORL) using active badge systems in the early 90's (Want R., Hopper A., Falcao V., Gibbons J., 1992). Other sensor technology such as acceleration sensors were used for identifying group activity patterns during office scenarios (Bieber G., Kirste T., 2007). An investigattion of the fundamental problem of recognizing activities for multiple users from sensor readings in a home environment, and proposal of a novel pattern mining approach to recognize both single-user and multi-user activities in a unified solution appeared in the International Conference on Mobile and Ubiquitous Systems. (Tao Gu, Zhanqing Wu, Liang Wang, Xianping Tao, and Jian Lu, 2009)
+
+#### Group activity recognition
+
+Recognition of group activities is fundamentally different from single, or multi-user activity recognition in that the goal is to recognize the behavior of the group as an entity, rather than the activities of the individual members within it (Dawud Gordon, Jan-Hendrik Hanne, Martin Berchtold, Ali Asghar Nazari Shirehjini, Michael Beigl, 2013). Group behavior is emergent in nature, meaning that the properties of the behavior of the group are fundamentally different then the properties of the behavior of the individuals within it, or any sum of that behavior (Lewin, K., 1951). The main challenges are in modeling the behavior of the individual group members, as well as the roles of the individual within the group dynamic (Hirano, T., and Maekawa, T., 2013) and their relationship to emergent behavior of the group in parallel (Brdiczka, O., Maisonnasse, J., Reignier, P., and Crowley, J. L., 2007). Challenges which must still be addressed include quantification of the behavior and roles of individuals who join the group, integration of explicit models for role description into inference algorithms, and scalability evaluations for very large groups and crowds. Group activity recognition has applications for crowd management and response in emergency situations, as well as for social networking and Quantified Self applications (Dawud Gordon, 2014).
+
+### Scope of the HAR Data Set V1.0
+
+The scope of this data set covers part of the layer 2 definition because it focus only in activities of daily living (ADL) regardless the location sequences and environmental conditions where those activities were performed, limiting to six activities: WALKING, WALKING\_UPSTAIRS, WALKING\_DOWNSTAIRS, SITTING, STANDING and LAYING.
+
+It's understood this data set falls in the single-user type of activity recognition as it contains observations of 30 subjects performing their individual activities and no attribute relates activities between subjects.
+
+### Motivation of this analysis
+
+An exciting area in Data Science is Wearable Computing - see for example this [article from Inside Activity Tracking](http://www.insideactivitytracking.com/data-science-activity-tracking-and-the-battle-for-the-worlds-top-sports-brand/). Companies like [Fitbit](https://www.fitbit.com/), [Nike](http://www.nike.com/), [Jawbone Up](https://jawbone.com/up), [Strava](https://www.strava.com/), and many others are racing to develop the most advanced algorithms to attract new users.
+
+General information about the environment used
+----------------------------------------------
+
+Hardware:
+
+    Processor: Inter(R) Core(TM) i5-2300 CPU @ 2.80Ghz
+    Number of Cores: 4
+    Installed RAM: 8.00 GB  
+    System type: x64-based processor
+
+Operating System:
+
+``` r
+Sys.info()[c("sysname","release")]
+```
+
+    ##   sysname   release 
+    ## "Windows"  "10 x64"
+
+R version:
+
+``` r
+R.Version()[c("version.string", "arch")]
+```
+
+    ## $version.string
+    ## [1] "R version 3.3.2 (2016-10-31)"
+    ## 
+    ## $arch
+    ## [1] "x86_64"
+
+RStudio Desktop version 1.0.136
+
+R packages used beyond the R defaults `{base}`, `{utils}`, `{stat}`:
+
+``` r
+packageVersion("dplyr")
+```
+
+    ## [1] '0.5.0'
+
+``` r
+packageVersion("tidyr")
+```
+
+    ## [1] '0.6.1'
+
+Analysis
+--------
 
 Analyzes the feature vectors, signals, statistics and angle vectors of the HAR Data Set V1.0
 
@@ -56,26 +159,26 @@ Calculus
 
 ``` r
 calculus <- read_calculus()
-paste(calculus$name, calculus$description)
+paste0(calculus$name, ": ", calculus$description)
 ```
 
-    ##  [1] "mean() Mean value"                                                                         
-    ##  [2] "std() Standard deviation"                                                                  
-    ##  [3] "mad() Median absolute deviation"                                                           
-    ##  [4] "max() Largest value in array"                                                              
-    ##  [5] "min() Smallest value in array"                                                             
-    ##  [6] "sma() Signal magnitude area"                                                               
-    ##  [7] "energy() Energy measure. Sum of the squares divided by the number of values."              
-    ##  [8] "iqr() Interquartile range"                                                                 
-    ##  [9] "entropy() Signal entropy"                                                                  
-    ## [10] "arCoeff() Autorregresion coefficients with Burg order equal to 4"                          
-    ## [11] "correlation() correlation coefficient between two signals"                                 
-    ## [12] "maxInds() index of the frequency component with largest magnitude"                         
-    ## [13] "meanFreq() Weighted average of the frequency components to obtain a mean frequency"        
-    ## [14] "skewness() skewness of the frequency domain signal"                                        
-    ## [15] "kurtosis() kurtosis of the frequency domain signal"                                        
-    ## [16] "bandsEnergy() Energy of a frequency interval within the 64 bins of the FFT of each window."
-    ## [17] "angle() Angle between to vectors."
+    ##  [1] "mean(): Mean value"                                                                         
+    ##  [2] "std(): Standard deviation"                                                                  
+    ##  [3] "mad(): Median absolute deviation"                                                           
+    ##  [4] "max(): Largest value in array"                                                              
+    ##  [5] "min(): Smallest value in array"                                                             
+    ##  [6] "sma(): Signal magnitude area"                                                               
+    ##  [7] "energy(): Energy measure. Sum of the squares divided by the number of values."              
+    ##  [8] "iqr(): Interquartile range"                                                                 
+    ##  [9] "entropy(): Signal entropy"                                                                  
+    ## [10] "arCoeff(): Autorregresion coefficients with Burg order equal to 4"                          
+    ## [11] "correlation(): correlation coefficient between two signals"                                 
+    ## [12] "maxInds(): index of the frequency component with largest magnitude"                         
+    ## [13] "meanFreq(): Weighted average of the frequency components to obtain a mean frequency"        
+    ## [14] "skewness(): skewness of the frequency domain signal"                                        
+    ## [15] "kurtosis(): kurtosis of the frequency domain signal"                                        
+    ## [16] "bandsEnergy(): Energy of a frequency interval within the 64 bins of the FFT of each window."
+    ## [17] "angle(): Angle between to vectors."
 
 Activities
 ----------
@@ -95,6 +198,8 @@ activity_labels
 
 Vectors for angle calculus
 --------------------------
+
+Additional vectors obtained by averaging the signals in a signal window sample. These are used on the angle() variable.
 
 ``` r
 angleVectors <- read_angleVectors()
@@ -118,149 +223,44 @@ source("dsub.R")
 ### Feature names with duplicated component
 
 ``` r
-dsub(features, "name", "^.([A-Z][a-z]+)(\\1).*", "", explain = TRUE)
+dsub("features", "name", "^.([A-Z][a-z]+)(\\1).*", "\\1", "", explain = TRUE, verbose = FALSE)
 ```
 
-    ## It would affect 39 row(s) with the sentence: 
-    ## 
-    ## features[516:554, "name"] <- sub("Body", "", features[516:554, "name"])
-
-    ##  [1] "fBodyBodyAccJerkMag-mean()" <- "fBodyAccJerkMag-mean()"          
-    ##  [2] "fBodyBodyAccJerkMag-std()" <- "fBodyAccJerkMag-std()"            
-    ##  [3] "fBodyBodyAccJerkMag-mad()" <- "fBodyAccJerkMag-mad()"            
-    ##  [4] "fBodyBodyAccJerkMag-max()" <- "fBodyAccJerkMag-max()"            
-    ##  [5] "fBodyBodyAccJerkMag-min()" <- "fBodyAccJerkMag-min()"            
-    ##  [6] "fBodyBodyAccJerkMag-sma()" <- "fBodyAccJerkMag-sma()"            
-    ##  [7] "fBodyBodyAccJerkMag-energy()" <- "fBodyAccJerkMag-energy()"      
-    ##  [8] "fBodyBodyAccJerkMag-iqr()" <- "fBodyAccJerkMag-iqr()"            
-    ##  [9] "fBodyBodyAccJerkMag-entropy()" <- "fBodyAccJerkMag-entropy()"    
-    ## [10] "fBodyBodyAccJerkMag-maxInds" <- "fBodyAccJerkMag-maxInds"        
-    ## [11] "fBodyBodyAccJerkMag-meanFreq()" <- "fBodyAccJerkMag-meanFreq()"  
-    ## [12] "fBodyBodyAccJerkMag-skewness()" <- "fBodyAccJerkMag-skewness()"  
-    ## [13] "fBodyBodyAccJerkMag-kurtosis()" <- "fBodyAccJerkMag-kurtosis()"  
-    ## [14] "fBodyBodyGyroMag-mean()" <- "fBodyGyroMag-mean()"                
-    ## [15] "fBodyBodyGyroMag-std()" <- "fBodyGyroMag-std()"                  
-    ## [16] "fBodyBodyGyroMag-mad()" <- "fBodyGyroMag-mad()"                  
-    ## [17] "fBodyBodyGyroMag-max()" <- "fBodyGyroMag-max()"                  
-    ## [18] "fBodyBodyGyroMag-min()" <- "fBodyGyroMag-min()"                  
-    ## [19] "fBodyBodyGyroMag-sma()" <- "fBodyGyroMag-sma()"                  
-    ## [20] "fBodyBodyGyroMag-energy()" <- "fBodyGyroMag-energy()"            
-    ## [21] "fBodyBodyGyroMag-iqr()" <- "fBodyGyroMag-iqr()"                  
-    ## [22] "fBodyBodyGyroMag-entropy()" <- "fBodyGyroMag-entropy()"          
-    ## [23] "fBodyBodyGyroMag-maxInds" <- "fBodyGyroMag-maxInds"              
-    ## [24] "fBodyBodyGyroMag-meanFreq()" <- "fBodyGyroMag-meanFreq()"        
-    ## [25] "fBodyBodyGyroMag-skewness()" <- "fBodyGyroMag-skewness()"        
-    ## [26] "fBodyBodyGyroMag-kurtosis()" <- "fBodyGyroMag-kurtosis()"        
-    ## [27] "fBodyBodyGyroJerkMag-mean()" <- "fBodyGyroJerkMag-mean()"        
-    ## [28] "fBodyBodyGyroJerkMag-std()" <- "fBodyGyroJerkMag-std()"          
-    ## [29] "fBodyBodyGyroJerkMag-mad()" <- "fBodyGyroJerkMag-mad()"          
-    ## [30] "fBodyBodyGyroJerkMag-max()" <- "fBodyGyroJerkMag-max()"          
-    ## [31] "fBodyBodyGyroJerkMag-min()" <- "fBodyGyroJerkMag-min()"          
-    ## [32] "fBodyBodyGyroJerkMag-sma()" <- "fBodyGyroJerkMag-sma()"          
-    ## [33] "fBodyBodyGyroJerkMag-energy()" <- "fBodyGyroJerkMag-energy()"    
-    ## [34] "fBodyBodyGyroJerkMag-iqr()" <- "fBodyGyroJerkMag-iqr()"          
-    ## [35] "fBodyBodyGyroJerkMag-entropy()" <- "fBodyGyroJerkMag-entropy()"  
-    ## [36] "fBodyBodyGyroJerkMag-maxInds" <- "fBodyGyroJerkMag-maxInds"      
-    ## [37] "fBodyBodyGyroJerkMag-meanFreq()" <- "fBodyGyroJerkMag-meanFreq()"
-    ## [38] "fBodyBodyGyroJerkMag-skewness()" <- "fBodyGyroJerkMag-skewness()"
-    ## [39] "fBodyBodyGyroJerkMag-kurtosis()" <- "fBodyGyroJerkMag-kurtosis()"
+    ## It would affect 39 row(s) with the sentence: features[516:554, "name"] <- sub("Body", "", features[516:554, "name"])
 
 ### Removing duplicated component
 
 ``` r
-dsub(features, "name", "^.([A-Z][a-z]+)(\\1).*", "", explain = FALSE)
+dsub("features", "name", "^.([A-Z][a-z]+)(\\1).*", "\\1", "", explain = FALSE, verbose = FALSE)
 ```
-
-    ## It was affected 39 row(s) with the sentence: 
-    ## 
-    ## features[516:554, "name"] <- sub("Body", "", features[516:554, "name"])
-
-    ##  [1] "fBodyAccJerkMag-mean()"      "fBodyAccJerkMag-std()"      
-    ##  [3] "fBodyAccJerkMag-mad()"       "fBodyAccJerkMag-max()"      
-    ##  [5] "fBodyAccJerkMag-min()"       "fBodyAccJerkMag-sma()"      
-    ##  [7] "fBodyAccJerkMag-energy()"    "fBodyAccJerkMag-iqr()"      
-    ##  [9] "fBodyAccJerkMag-entropy()"   "fBodyAccJerkMag-maxInds"    
-    ## [11] "fBodyAccJerkMag-meanFreq()"  "fBodyAccJerkMag-skewness()" 
-    ## [13] "fBodyAccJerkMag-kurtosis()"  "fBodyGyroMag-mean()"        
-    ## [15] "fBodyGyroMag-std()"          "fBodyGyroMag-mad()"         
-    ## [17] "fBodyGyroMag-max()"          "fBodyGyroMag-min()"         
-    ## [19] "fBodyGyroMag-sma()"          "fBodyGyroMag-energy()"      
-    ## [21] "fBodyGyroMag-iqr()"          "fBodyGyroMag-entropy()"     
-    ## [23] "fBodyGyroMag-maxInds"        "fBodyGyroMag-meanFreq()"    
-    ## [25] "fBodyGyroMag-skewness()"     "fBodyGyroMag-kurtosis()"    
-    ## [27] "fBodyGyroJerkMag-mean()"     "fBodyGyroJerkMag-std()"     
-    ## [29] "fBodyGyroJerkMag-mad()"      "fBodyGyroJerkMag-max()"     
-    ## [31] "fBodyGyroJerkMag-min()"      "fBodyGyroJerkMag-sma()"     
-    ## [33] "fBodyGyroJerkMag-energy()"   "fBodyGyroJerkMag-iqr()"     
-    ## [35] "fBodyGyroJerkMag-entropy()"  "fBodyGyroJerkMag-maxInds"   
-    ## [37] "fBodyGyroJerkMag-meanFreq()" "fBodyGyroJerkMag-skewness()"
-    ## [39] "fBodyGyroJerkMag-kurtosis()"
 
 ### Feature names containing invalid parenthesis
 
 ``` r
-dsub(features, "name", "^.+[\\(].+([\\)]).+[\\)].*", "", explain = TRUE)
+dsub("features", "name", "^.+[\\(].+([\\)]).+[\\)].*", "\\1", "", explain = TRUE, verbose = FALSE)
 ```
 
-    ## It would affect 1 row(s) with the sentence: 
-    ## 
-    ## features[556, "name"] <- sub("\\)", "", features[556, "name"])
-
-    ## [1] "angle(tBodyAccJerkMean),gravityMean)" <- "angle(tBodyAccJerkMean,gravityMean)"
+    ## It would affect 1 row(s) with the sentence: features[556, "name"] <- sub(")", "", features[556, "name"])
 
 ### Removing invalid parenthesis
 
 ``` r
-dsub(features, "name", ".*[\\(\\)]+.*([\\(\\)])+.*[\\(\\)]+.*", "", explain = FALSE)
+dsub("features", "name", "^.+[\\(].+([\\)]).+[\\)].*", "\\1", "", explain = FALSE, verbose = FALSE)
 ```
-
-    ## It was affected 1 row(s) with the sentence: 
-    ## 
-    ## features[556, "name"] <- sub("\\)", "", features[556, "name"])
-
-    ## [1] "angle(tBodyAccJerkMean,gravityMean)"
 
 ### Feature names missing parenthesis
 
 ``` r
-dsub(features, "name", "^[a-zA-Z]+-([a-zA-Z]+)-?[XYZ]?$", "\\1\\(\\)", explain = TRUE)
+dsub("features", "name", "^[a-zA-Z]+-([a-zA-Z]+)-?[XYZ]?$", "(\\1)", "\\1()", explain = TRUE, verbose = FALSE)
 ```
 
-    ## It would affect 13 row(s) with the sentence: 
-    ## 
-    ## features[c(291, 292, 293, 370, 371, 372, 449, 450, 451, 512, 525, 538, 551), "name"] <- sub("maxInds", "maxInds()", features[c(291, 292, 293, 370, 371, 372, 449, 450, 451, 512, 525, 538, 551), "name"])
-
-    ##  [1] "fBodyAcc-maxInds-X" <- "fBodyAcc-maxInds()-X"            
-    ##  [2] "fBodyAcc-maxInds-Y" <- "fBodyAcc-maxInds()-Y"            
-    ##  [3] "fBodyAcc-maxInds-Z" <- "fBodyAcc-maxInds()-Z"            
-    ##  [4] "fBodyAccJerk-maxInds-X" <- "fBodyAccJerk-maxInds()-X"    
-    ##  [5] "fBodyAccJerk-maxInds-Y" <- "fBodyAccJerk-maxInds()-Y"    
-    ##  [6] "fBodyAccJerk-maxInds-Z" <- "fBodyAccJerk-maxInds()-Z"    
-    ##  [7] "fBodyGyro-maxInds-X" <- "fBodyGyro-maxInds()-X"          
-    ##  [8] "fBodyGyro-maxInds-Y" <- "fBodyGyro-maxInds()-Y"          
-    ##  [9] "fBodyGyro-maxInds-Z" <- "fBodyGyro-maxInds()-Z"          
-    ## [10] "fBodyAccMag-maxInds" <- "fBodyAccMag-maxInds()"          
-    ## [11] "fBodyAccJerkMag-maxInds" <- "fBodyAccJerkMag-maxInds()"  
-    ## [12] "fBodyGyroMag-maxInds" <- "fBodyGyroMag-maxInds()"        
-    ## [13] "fBodyGyroJerkMag-maxInds" <- "fBodyGyroJerkMag-maxInds()"
+    ## It would affect 13 row(s) with the sentence: features[c(291, 292, 293, 370, 371, 372, 449, 450, 451, 512, 525, 538, 551), "name"] <- sub("(maxInds)", "\\1()", features[c(291, 292, 293, 370, 371, 372, 449, 450, 451, 512, 525, 538, 551), "name"])
 
 ### Including missing parenthesis
 
 ``` r
-dsub(features, "name", "^[a-zA-Z]+-([a-zA-Z]+)-?[XYZ]?$", "\\1\\(\\)", explain = FALSE)
+dsub("features", "name", "^[a-zA-Z]+-([a-zA-Z]+)-?[XYZ]?$", "(\\1)", "\\1()", explain = FALSE, verbose = FALSE)
 ```
-
-    ## It was affected 13 row(s) with the sentence: 
-    ## 
-    ## features[c(291, 292, 293, 370, 371, 372, 449, 450, 451, 512, 525, 538, 551), "name"] <- sub("maxInds", "maxInds()", features[c(291, 292, 293, 370, 371, 372, 449, 450, 451, 512, 525, 538, 551), "name"])
-
-    ##  [1] "fBodyAcc-maxInds()-X"       "fBodyAcc-maxInds()-Y"      
-    ##  [3] "fBodyAcc-maxInds()-Z"       "fBodyAccJerk-maxInds()-X"  
-    ##  [5] "fBodyAccJerk-maxInds()-Y"   "fBodyAccJerk-maxInds()-Z"  
-    ##  [7] "fBodyGyro-maxInds()-X"      "fBodyGyro-maxInds()-Y"     
-    ##  [9] "fBodyGyro-maxInds()-Z"      "fBodyAccMag-maxInds()"     
-    ## [11] "fBodyAccJerkMag-maxInds()"  "fBodyGyroMag-maxInds()"    
-    ## [13] "fBodyGyroJerkMag-maxInds()"
 
 Signal name decomposition
 -------------------------
@@ -351,36 +351,7 @@ Feature name decomposition
 --------------------------
 
 ``` r
-features <- features %>%
-    mutate(
-    signal = sub("^([a-zA-Z]+)-.+|.+", "\\1", name),
-    axesSep  = sub("^.+(Acc|Gyro|Jerk)(-).+|.+","\\2",name),
-    axes = getFeatureAxes(name),
-    domain = sub("^(t|f)?.+","\\1",name),
-    component = sub("^[tf]?(Body|Gravity)?.+","\\1",name),
-    sensor = sub("^[a-zA-Z]+(Acc|Gyro).+|.+","\\1",name),
-    jerk = sub("^[a-zA-Z]+(Jerk).+|.+","\\1",name),
-    magnitude = sub("^[a-zA-Z]+(Mag).+|.+","\\1",name),
-    signalSep = sub("^[a-zA-Z]+(-).+|.+","\\1",name),
-    calculus = sub("^[a-zA-Z]+-([a-zA-Z]+).+|^(angle).+","\\1\\2",name),
-    calcOpen = sub("^[a-zA-Z]+-[a-zA-Z]+(\\().+|.+","\\1",name),
-    calcClose = sub("^[a-zA-Z]+-[a-zA-Z]+\\((\\)).*|.+","\\1",name),
-    calcSep =  sub("^[a-zA-Z]+-[a-zA-Z]+\\(\\)(-).+|.+","\\1",name),
-    axis = sub("^[a-zA-Z]+-[a-zA-Z]+\\(\\)-([XYZ]),?[1-4]?|.+","\\1",name),
-    arCoeffSep = sub("^[a-zA-Z]+-arCoeff+\\(\\)-[XYZ](,).+|.+","\\1",name),
-    arCoeffLevel = sub("^[a-zA-Z]+-arCoeff\\(\\)-?[XYZ]?,?([1-4])|.+","\\1",name),
-    bandsEnergyLower = sub("^[a-zA-Z]+-bandsEnergy+\\(\\)-([0-9]+),[0-9]+|.+","\\1",name),
-    bandsEnergySep = sub("^[a-zA-Z]+-bandsEnergy+\\(\\)-[0-9]+(,).+|.+","\\1",name),
-    bandsEnergyUpper = sub("^[a-zA-Z]+-bandsEnergy+\\(\\)-[0-9]+,([0-9]+)|.+","\\1",name),
-    correlationAxis1 = sub("^[a-zA-Z]+-correlation+\\(\\)-([XY]).+|.+","\\1",name),
-    correlationSep =  sub("^[a-zA-Z]+-correlation+\\(\\)-[XY](,).+|.+","\\1",name),
-    correlationAxis2 = sub("^[a-zA-Z]+-correlation+\\(\\)-[XY],([YZ])|.+","\\1",name),
-    angleOpen = sub("^angle(\\().+|.+","\\1",name),
-    angleArg1 = sub("^angle\\(([a-zA-Z]+).+|.+","\\1",name),
-    angleSep = sub("^angle\\([a-zA-Z]+(,).+|.+","\\1",name),
-    angleArg2 = sub("^angle\\([a-zA-Z]+,([a-zA-Z]+)\\)|.+","\\1",name),
-    angleClose = sub("^angle\\([a-zA-Z]+,[a-zA-Z]+(\\))|.+","\\1",name)
-    )
+features <- decomposeFeatureNames(features)
 str(features)
 ```
 
@@ -419,7 +390,6 @@ str(features)
 
 ``` r
 features %>%
-    #unite(recomposition, sep = "", everything(), -id, -name, -signal, -axesSep, -axes) %>% #slower
     unite(recomposition, sep = "", signal, signalSep:angleClose) %>%
     select(name,recomposition) %>%
     head
@@ -438,13 +408,9 @@ Feature Formulas
 
 ``` r
 features %>%
-    #select(everything(), -signalSep, -(calcSep:arCoeffSep), -(correlationAxis1:correlationAxis2)) %>%
     select(id:axes, calculus:calcClose, arCoeffLevel:bandsEnergyUpper, angleOpen:angleClose) %>%
     unite(open, calcOpen, angleOpen, sep = "") %>%
-    
-    #unite(signal, domain:magnitude, axesSep, axes, sep = "") %>% replaced by:
     unite(signal, signal:axes, sep = "") %>%
-    
     mutate(arCoeffLevel = sub("(.+)",", \\1", arCoeffLevel)) %>%
     mutate(bandsEnergySep = sub(",", ", ", bandsEnergySep)) %>%
     unite(bandsEnergy, bandsEnergyLower, bandsEnergySep, bandsEnergyUpper, sep = "") %>%
@@ -456,7 +422,6 @@ features %>%
     left_join(calculus, by = c("key"="name")) %>%
     mutate(key = NULL) %>%
     unite(formula, calculus, open, signal, arCoeffLevel, bandsEnergy, angle, close, sep = "") %>%
-    #arrange(id) %>%
     slice(c(1,16,26,38,303,555))
 ```
 
@@ -539,7 +504,6 @@ Contingency Tables
 #### Features by Domain
 
 ``` r
-#xtabs(~ domain, features)
 table(domain = features$domain)
 ```
 
@@ -550,7 +514,6 @@ table(domain = features$domain)
 #### Features by Sensor
 
 ``` r
-#xtabs(~ sensor, features)
 table(sensor = features$sensor)
 ```
 
@@ -561,7 +524,6 @@ table(sensor = features$sensor)
 #### Features by Calculus
 
 ``` r
-#xtabs(~ calculus, features)
 table(calculus = features$calculus)
 ```
 
@@ -576,7 +538,6 @@ table(calculus = features$calculus)
 #### Features by Signal
 
 ``` r
-#xtabs(~ signal, features)
 table(signal = features$signal)
 ```
 
@@ -595,7 +556,6 @@ table(signal = features$signal)
 #### Features by Domain by Sensor
 
 ``` r
-#xtabs(~ domain + sensor, features)
 table(domain = features$domain, sensor = features$sensor)
 ```
 
@@ -608,7 +568,6 @@ table(domain = features$domain, sensor = features$sensor)
 #### Features by Calculus by Domain
 
 ``` r
-#xtabs(~ calculus + domain, features)
 table(calculus = features$calculus, domain = features$domain)
 ```
 
@@ -635,7 +594,6 @@ table(calculus = features$calculus, domain = features$domain)
 #### Features by Calculus by Sensor
 
 ``` r
-#xtabs(~ calculus + sensor, features)
 table(calculus = features$calculus, features$sensor)
 ```
 
@@ -662,7 +620,6 @@ table(calculus = features$calculus, features$sensor)
 #### Features by Signal by Domain
 
 ``` r
-#xtabs(~ signal + domain, features)
 table(signal = features$signal, domain = features$domain)
 ```
 
@@ -690,7 +647,6 @@ table(signal = features$signal, domain = features$domain)
 #### Features by Signal by Sensor
 
 ``` r
-#xtabs(~ signal + sensor, features)
 table(signal = features$signal,  sensor = features$sensor)
 ```
 
@@ -718,7 +674,6 @@ table(signal = features$signal,  sensor = features$sensor)
 #### Features by Signal by Calculus
 
 ``` r
-#xtabs(~ signal + calculus, features)
 table(signal = features$signal, calculus = features$calculus)
 ```
 
@@ -788,7 +743,6 @@ table(signal = features$signal, calculus = features$calculus)
 #### Feature Measurements by Subject
 
 ``` r
-#xtabs(~ subject, feature_measurements)
 table(subject = feature_measurements$subject)
 ```
 
@@ -803,7 +757,6 @@ table(subject = feature_measurements$subject)
 #### Feature Measurements by Activity
 
 ``` r
-#xtabs(~ activity_labels$name[activity], feature_measurements)
 table(activity = activity_labels$name[feature_measurements$activity])
 ```
 
@@ -816,7 +769,6 @@ table(activity = activity_labels$name[feature_measurements$activity])
 #### Feature Measurements by Domain
 
 ``` r
-#xtabs(~ features$domain[feature], feature_measurements)
 table(domain = features$domain[feature_measurements$feature])
 ```
 
@@ -827,7 +779,6 @@ table(domain = features$domain[feature_measurements$feature])
 #### Feature Measurements by Sensor
 
 ``` r
-#xtabs(~ features$sensor[feature], feature_measurements)
 table(sensor = features$sensor[feature_measurements$feature])
 ```
 
@@ -838,7 +789,6 @@ table(sensor = features$sensor[feature_measurements$feature])
 #### Feature Measurements by Calculus
 
 ``` r
-#xtabs(~ features$calculus[feature], feature_measurements)
 table(calculus = features$calculus[feature_measurements$feature])
 ```
 
@@ -853,7 +803,6 @@ table(calculus = features$calculus[feature_measurements$feature])
 #### Feature Measurements by Signal
 
 ``` r
-#xtabs(~ features$signal[feature], feature_measurements)
 table(signal = features$signal[feature_measurements$feature])
 ```
 
@@ -872,7 +821,6 @@ table(signal = features$signal[feature_measurements$feature])
 #### Feature Measurements by Domain by Sensor
 
 ``` r
-#xtabs(~ features$domain[feature] + features$sensor[feature], feature_measurements)
 table(domain = features$domain[feature_measurements$feature], sensor = features$sensor[feature_measurements$feature])
 ```
 
@@ -885,7 +833,6 @@ table(domain = features$domain[feature_measurements$feature], sensor = features$
 #### Feature Measurements by Calculus by Domain
 
 ``` r
-#xtabs(~ features$calculus[feature] + features$domain[feature], feature_measurements)
 table(calculus = features$calculus[feature_measurements$feature], domain = features$domain[feature_measurements$feature])
 ```
 
@@ -912,7 +859,6 @@ table(calculus = features$calculus[feature_measurements$feature], domain = featu
 #### Feature Measurements by Calculus by Sensor
 
 ``` r
-#xtabs(~ features$calculus[feature] + features$sensor[feature], feature_measurements)
 table(calculus = features$calculus[feature_measurements$feature], sensor = features$sensor[feature_measurements$feature])
 ```
 
@@ -939,7 +885,6 @@ table(calculus = features$calculus[feature_measurements$feature], sensor = featu
 #### Feature Measurements by Signal by Domain
 
 ``` r
-#xtabs(~ features$signal[feature] + features$domain[feature], feature_measurements)
 table(signal = features$signal[feature_measurements$feature], domain = features$domain[feature_measurements$feature])
 ```
 
@@ -967,7 +912,6 @@ table(signal = features$signal[feature_measurements$feature], domain = features$
 #### Feature Measurements by Signal by Sensor
 
 ``` r
-#xtabs(~ features$signal[feature] + features$sensor[feature], feature_measurements)
 table(signal = features$signal[feature_measurements$feature],  sensor = features$sensor[feature_measurements$feature])
 ```
 
@@ -995,7 +939,6 @@ table(signal = features$signal[feature_measurements$feature],  sensor = features
 #### Feature Measurements by Signal by Calculus
 
 ``` r
-#xtabs(~ features$signal[feature] + features$calculus[feature], feature_measurements)
 table(signal = features$signal[feature_measurements$feature], calculus = features$calculus[feature_measurements$feature])
 ```
 
@@ -1062,19 +1005,9 @@ table(signal = features$signal[feature_measurements$feature], calculus = feature
 
 ### Inertial Signal Reading Contingency Tables
 
-``` r
-#TODO: much too big and slow. Try avoid these join by deferring to table()
-# inertial_signals <- inertial_signals %>%
-#     left_join(activity_labels, by = c("activity" = "id"))
-# nrow(inertial_signals)
-# format(object.size(inertial_signals), units = "auto")
-# head(inertial_signals)
-```
-
 #### Inertial Signal Readings by Subject
 
 ``` r
-#xtabs(~ subject, inertial_signals)
 table(subject = inertial_signals$subject)
 ```
 
@@ -1089,7 +1022,6 @@ table(subject = inertial_signals$subject)
 #### Inertial Signal Readings by Activity
 
 ``` r
-#xtabs(~ activity_labels$name[activity], inertial_signals)
 table(activity = activity_labels$name[inertial_signals$activity])
 ```
 
@@ -1102,7 +1034,6 @@ table(activity = activity_labels$name[inertial_signals$activity])
 #### Inertial Signal Readings by Signal
 
 ``` r
-#xtabs(~ signal, inertial_signals)
 table(signal = inertial_signals$signal)
 ```
 
@@ -1115,7 +1046,6 @@ table(signal = inertial_signals$signal)
 ### Inertial Signal Readings by Signal by Activity
 
 ``` r
-#xtabs(~ signal + activity_labels$name[activity], inertial_signals)
 table(signal = inertial_signals$signal, activity = activity_labels$name[inertial_signals$activity])
 ```
 
@@ -1141,3 +1071,37 @@ table(signal = inertial_signals$signal, activity = activity_labels$name[inertial
     ##   tBodyGyro-X           197632
     ##   tBodyGyro-Y           197632
     ##   tBodyGyro-Z           197632
+
+References
+----------
+
+Wikipedia. Activity recognition. Available at <https://en.wikipedia.org/wiki/Activity_recognition>. Accessed 26-Jan-2017.
+
+IWSC. International Symposium on Wearable Computers. Available at <http://www.iswc.net/>. Accessed 26-Jan-2017.
+
+UbiComp. International Joint Conference on Pervasive Computting. Available at <http://www.ubicomp.org/>. Acccessed 26-Jan-2017.
+
+Tanzeem Choudhury, Gaetano Borriello, et al. The Mobile Sensing Platform: An Embedded System for Activity Recognition. Appears in the IEEE Pervasive Magazine - Special Issue on Activity-Based Computing, April 2008.
+
+Nishkam Ravi, Nikhil Dandekar, Preetham Mysore, Michael Littman. Activity Recognition from Accelerometer Data. Proceedings of the Seventeenth Conference on Innovative Applications of Artificial Intelligence (IAAI/AAAI 2005).
+
+Want R., Hopper A., Falcao V., Gibbons J.: The Active Badge Location System, ACM Transactions on Information, Systems, Vol. 40, No. 1, pp. 91-102, January 1992.
+
+Bieber G., Kirste T., Untersuchung des gruppendynamischen Aktivitaetsverhaltes im Office-Umfeld, 7. Berliner Werkstatt Mensch-Maschine-Systeme, Berlin, Germany, 2007
+
+Tao Gu, Zhanqing Wu, Liang Wang, Xianping Tao, and Jian Lu. Mining Emerging Patterns for Recognizing Activities of Multiple Users in Pervasive Computing. In Proc. of the 6th International Conference on Mobile and Ubiquitous Systems: Computing, Networking and Services (MobiQuitous '09), Toronto, Canada, July 13–16, 2009.
+
+Dawud Gordon, Jan-Hendrik Hanne, Martin Berchtold, Ali Asghar Nazari Shirehjini, Michael Beigl: Towards Collaborative Group Activity Recognition Using Mobile Devices, Mobile Networks and Applications 18(3), 2013, p. 326-340
+
+Lewin, K. Field theory in social science: selected theoretical papers. Social science paperbacks. Harper, New York, 1951.
+
+Hirano, T., and Maekawa, T. A hybrid unsupervised/supervised model for group activity recognition. In Proceedings of the 2013 International Symposium on Wearable Computers, ISWC ’13, ACM (New York, NY, USA, 2013), 21–24
+
+Brdiczka, O., Maisonnasse, J., Reignier, P., and Crowley, J. L. Detecting small group activities from multimodal observations. Applied Intelligence 30, 1 (July 2007), 47–57.
+
+Dawud Gordon, Group Activity Recognition Using Wearable Sensing Devices, Dissertation, Karlsruhe Institute of Technology, 2014
+
+Acknowledgment
+--------------
+
+Davide Anguita, Alessandro Ghio, Luca Oneto, Xavier Parra and Jorge L. Reyes-Ortiz. A Public Domain Dataset for Human Activity Recognition Using Smartphones. 21th European Symposium on Artificial Neural Networks, Computational Intelligence and Machine Learning, ESANN 2013. Bruges, Belgium 24-26 April 2013.
