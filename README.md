@@ -1,7 +1,7 @@
 README
 ================
 by Maurício Collaça
-on 2017-02-01
+on 2017-10-10
 
 Getting and Cleaning Data Course Project
 ----------------------------------------
@@ -31,8 +31,6 @@ The [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) repository in
 
 -   [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md) - Code book that modifies and updates the available codebooks with the data to indicate all variables and summaries calculated, units, transformations, work performed to clean up, tidy, process and display of the data and any other relevant information.
 
--   [HAR-feature-selection.png](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-feature-selection.png) - Feature selection chart.
-
 -   [HAR-utils.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-utils.R) - R script containing file reading helper functions developed to encapsulate code and improve the reusability and the readability of the `run_analysis.R`. It's not necessary to read the `HAR-utils.R` source code in order to understand the `run_analysis.R`.
 
 -   [averages.txt](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt) - A tidy data set output from `run_analysis.R`, containing the the average of each mean and standard deviation variable for each activity and each subject.
@@ -42,9 +40,9 @@ Installation, running and evaluation instructions
 
 These are the basic installation, running and evaluation instructions for the project. Please read and follow them carefully to ensure you have everything running properly and after that, read the [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md) for deeper explanations and final evaluation.
 
-1.  If you still haven't done it, install R available at [The R Foundation](https://www.r-project.org/). This project used R version 3.3.2 (2016-10-31).
-2.  Optionally, you may use RStudio as well, available at [RStudio](https://www.rstudio.com/). This project used RStudio Desktop version 1.0.136.
-3.  If you still haven't done it, install additional R packages `{dplyr}` and `{tidyr}`. The easiest way to do that is via R (menu Packages &gt; Install Package(s)...) or RStudio (menu Tools &gt; Install packages...). This project used `{dplyr}` version 0.5.0 and `{tidr}` version 0.6.1.
+1.  If you still haven't done it, install R available at [The R Foundation](https://www.r-project.org/). This project used R version 3.4.2 (2017-09-28).
+2.  Optionally, you may use RStudio as well, available at [RStudio](https://www.rstudio.com/). This project used RStudio Desktop version 1.1.383.
+3.  If you still haven't done it, install additional R packages `{dplyr}` and `{tidyr}`. The easiest way to do that is via R (menu Packages &gt; Install Package(s)...) or RStudio (menu Tools &gt; Install packages...). This project used `{dplyr}` version 0.7.4 and `{tidr}` version 0.7.1.
 4.  Download only [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/run_analysis.R) and [HAR-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R) in some local working directory of your preference. The other files (i.e. \*.md files) are not necessary to download for your evaluation as they are rendered by GitHub website. If you download them you would need Rstudio to view/render them in your computer.
 5.  Optionally, download the `Dataset.zip` from [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) or [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip) in the same local working directory but the script will do that for your convenience.
 6.  Open `R` or `RStudio`
@@ -113,8 +111,11 @@ In the last requirement, the final data set `averages` is summarized in the Cons
 You may check out this data set by in many ways:
 
 `print(averages)`
+
 `View(averages)`
+
 `browseURL("averages.txt")`
+
 `View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))`
 
 If you still haven't run the script, you may preview the `averages.txt` [here](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt).

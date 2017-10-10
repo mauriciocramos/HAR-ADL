@@ -1,6 +1,6 @@
 # Script: dsub.R
 # Author: Maurício Collaça
-# Date: 24/Jan/2017
+# Date: 10/Oct/2017
 # Description: Data Frame Pattern Matching and Replacement
 
 dsub <- function(dfname, colname, grepPattern, subPattern, replacement, explain = TRUE, verbose = TRUE) {

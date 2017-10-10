@@ -1,6 +1,6 @@
 # Script: HAR-utils.R
 # Author: Maurício Collaça
-# Date: 24/Jan/2017
+# Date: 10/Oct/2017
 # Description: a set of common functions for the HAR data set analysis V1.0
 
 ## HAR data set path builder

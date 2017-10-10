@@ -1,7 +1,7 @@
 HAR-analysis
 ================
 by Maurício Collaça
-on 2017-02-01
+on 2017-10-10
 
 Analysis of the Human Activity Recognition (HAR) Using Smartphones Data Set
 ---------------------------------------------------------------------------
@@ -85,12 +85,12 @@ R.Version()[c("version.string", "arch")]
 ```
 
     ## $version.string
-    ## [1] "R version 3.3.2 (2016-10-31)"
+    ## [1] "R version 3.4.2 (2017-09-28)"
     ## 
     ## $arch
     ## [1] "x86_64"
 
-RStudio Desktop version 1.0.136
+RStudio Desktop version 1.1.383
 
 R packages used beyond the R defaults `{base}`, `{utils}`, `{stat}`:
 
@@ -98,13 +98,13 @@ R packages used beyond the R defaults `{base}`, `{utils}`, `{stat}`:
 packageVersion("dplyr")
 ```
 
-    ## [1] '0.5.0'
+    ## [1] '0.7.4'
 
 ``` r
 packageVersion("tidyr")
 ```
 
-    ## [1] '0.6.1'
+    ## [1] '0.7.1'
 
 Analysis
 --------
@@ -425,20 +425,16 @@ features %>%
     slice(c(1,16,26,38,303,555))
 ```
 
-    ##    id                        name                         formula
-    ## 1   1           tBodyAcc-mean()-X                mean(tBodyAcc-X)
-    ## 2  16              tBodyAcc-sma()               sma(tBodyAcc-XYZ)
-    ## 3  26      tBodyAcc-arCoeff()-X,1          arCoeff(tBodyAcc-X, 1)
-    ## 4  38  tBodyAcc-correlation()-X,Y        correlation(tBodyAcc-XY)
-    ## 5 303  fBodyAcc-bandsEnergy()-1,8 bandsEnergy(fBodyAcc-XYZ, 1, 8)
-    ## 6 555 angle(tBodyAccMean,gravity)    angle(tBodyAccMean, gravity)
-    ##                                                                    description
-    ## 1                                                                   Mean value
-    ## 2                                                        Signal magnitude area
-    ## 3                       Autorregresion coefficients with Burg order equal to 4
-    ## 4                                  correlation coefficient between two signals
-    ## 5 Energy of a frequency interval within the 64 bins of the FFT of each window.
-    ## 6                                                    Angle between to vectors.
+    ## # A tibble: 6 x 4
+    ##      id                        name                         formula
+    ##   <int>                       <chr>                           <chr>
+    ## 1     1           tBodyAcc-mean()-X                mean(tBodyAcc-X)
+    ## 2    16              tBodyAcc-sma()               sma(tBodyAcc-XYZ)
+    ## 3    26      tBodyAcc-arCoeff()-X,1          arCoeff(tBodyAcc-X, 1)
+    ## 4    38  tBodyAcc-correlation()-X,Y        correlation(tBodyAcc-XY)
+    ## 5   303  fBodyAcc-bandsEnergy()-1,8 bandsEnergy(fBodyAcc-XYZ, 1, 8)
+    ## 6   555 angle(tBodyAccMean,gravity)    angle(tBodyAccMean, gravity)
+    ## # ... with 1 more variables: description <chr>
 
 Features Measurements
 ---------------------

@@ -1,7 +1,7 @@
 CodeBook
 ================
 by Maurício Collaça
-on 2017-02-01
+on 2017-10-10
 
 This code book modifies and updates the available codebooks with the data to indicate all variables and summaries calculated, units, transformations, work performed to clean up, tidy, process and display of the data and any other relevant information.
 
@@ -235,12 +235,12 @@ R.Version()[c("version.string", "arch")]
 ```
 
     ## $version.string
-    ## [1] "R version 3.3.2 (2016-10-31)"
+    ## [1] "R version 3.4.2 (2017-09-28)"
     ## 
     ## $arch
     ## [1] "x86_64"
 
-RStudio Desktop version 1.0.136
+RStudio Desktop version 1.1.383
 
 R packages used beyond the R defaults `{base}`, `{utils}`, `{stat}`:
 
@@ -248,110 +248,13 @@ R packages used beyond the R defaults `{base}`, `{utils}`, `{stat}`:
 packageVersion("dplyr")
 ```
 
-    ## [1] '0.5.0'
+    ## [1] '0.7.4'
 
 ``` r
 packageVersion("tidyr")
 ```
 
-    ## [1] '0.6.1'
-
-With this hardware and software configuration, the `run_analysis.R` takes around 55 seconds to complete at the first time, because it also includes the downloading and uncompressing tasks. That time also depends on the internet connection to the <https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip> at running time.
-
-``` r
-unlink("Dataset.zip")
-unlink("UCI HAR Dataset", recursive = TRUE, force = TRUE)
-system.time({
-    sink(file = "run_analysis.log")
-    suppressMessages(source("run_analysis.R"))
-    sink()
-})
-```
-
-    ##    user  system elapsed 
-    ##   17.17    2.11   51.09
-
-In the next times you run it, there won't be any download and uncompressing tasks and it would take around 14 seconds.
-
-``` r
-system.time({
-    sink(file = "run_analysis.log")
-    suppressMessages(source("run_analysis.R"))
-    sink()
-})
-```
-
-    ##    user  system elapsed 
-    ##   13.10    0.41   13.51
-
-Installation, running and evaluation instructions
--------------------------------------------------
-
-1.  If you still haven't done it, install R available at [The R Foundation](https://www.r-project.org/). This project used R version 3.3.2 (2016-10-31).
-2.  Optionally, you may use RStudio as well, available at [RStudio](https://www.rstudio.com/). This project used RStudio Desktop version 1.0.136.
-3.  If you still haven't done it, install additional R packages `{dplyr}` and `{tidyr}`. The easiest way to do that is via R (menu Packages &gt; Install Package(s)...) or RStudio (menu Tools &gt; Install packages...). This project used `{dplyr}` version 0.5.0 and `{tidr}` version 0.6.1.
-4.  Download only [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/run_analysis.R) and [HAR-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R) in some local working directory of your preference. The other files (i.e. \*.md files) are not necessary to download for your evaluation as they are rendered by GitHub website. If you download them you would need Rstudio to view/render them in your computer.
-5.  Optionally, download the `Dataset.zip` from [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) or [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip) in the same local working directory but the script will do that for your convenience.
-6.  Open `R` or `RStudio`
-7.  Go to the directory where the scripts were download using the command `setwd("your-directory-here")`
-8.  Run the command: `source("run_analysis.R")`. At this point the script will download the `Dataset.zip` if necessary, uncompress it, start the data processing and display the results.
-
-The script will display a series of messages and summary results for each project requirement in the R/Rstudio Console, easying your evaluation:
-
-``` r
-source("run_analysis.R")
-```
-
-    ## 1. Merges the training and the test sets to create one data set.
-
-    ## 'data.frame':    5777739 obs. of  4 variables:
-    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ activity: int  5 5 5 5 5 5 5 5 5 5 ...
-    ##  $ feature : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ value   : num  0.289 0.278 0.28 0.279 0.277 ...
-
-    ## 2. Extracts only the measurements on the mean and standard deviation for each measurement.
-
-    ## 'data.frame':    813621 obs. of  4 variables:
-    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ activity: int  5 5 5 5 5 5 5 5 5 5 ...
-    ##  $ feature : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ value   : num  0.289 0.278 0.28 0.279 0.277 ...
-
-    ## 3. Uses descriptive activity names to name the activities in the data set
-
-    ## 'data.frame':    813621 obs. of  4 variables:
-    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ activity: chr  "STANDING" "STANDING" "STANDING" "STANDING" ...
-    ##  $ feature : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ value   : num  0.289 0.278 0.28 0.279 0.277 ...
-
-    ## 4. Appropriately labels the data set with descriptive variable names.
-
-    ## 'data.frame':    813621 obs. of  4 variables:
-    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ activity: chr  "STANDING" "STANDING" "STANDING" "STANDING" ...
-    ##  $ feature : chr  "tBodyAcc-mean()-X" "tBodyAcc-mean()-X" "tBodyAcc-mean()-X" "tBodyAcc-mean()-X" ...
-    ##  $ value   : num  0.289 0.278 0.28 0.279 0.277 ...
-
-    ## 5. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
-
-    ## 'data.frame':    14220 obs. of  4 variables:
-    ##  $ subject : int  1 1 1 1 1 1 1 1 1 1 ...
-    ##  $ activity: chr  "LAYING" "LAYING" "LAYING" "LAYING" ...
-    ##  $ feature : chr  "fBodyAcc-mean()-X" "fBodyAcc-mean()-Y" "fBodyAcc-mean()-Z" "fBodyAcc-meanFreq()-X" ...
-    ##  $ average : num  -0.9391 -0.8671 -0.8827 -0.1588 0.0975 ...
-
-In the last requirement, the final data set `averages` is summarized in the Console, its content is saved in the file `averages.txt` on your local working directory and also opened in detail in window `View()` for your convenience by the script itself.
-
-You may check out this data set by in many ways:
-
-`print(averages)`
-`View(averages)`
-`browseURL("averages.txt")`
-`View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))`
-
-If you still haven't run the script, you may preview the `averages.txt` [here](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt).
+    ## [1] '0.7.1'
 
 Transformations
 ---------------
@@ -371,6 +274,17 @@ The `{dplyr}` functions `group_by()` and `summarize()` are used with the functio
 ``` r
 library(dplyr)
 ```
+
+    ## 
+    ## Attaching package: 'dplyr'
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     filter, lag
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     intersect, setdiff, setequal, union
 
 The `{tidyr}` function `gather()` is used to take multiple columns and collapses into key-value pairs, duplicating all other columns as needed.
 
@@ -648,8 +562,11 @@ View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))
 You may check out this data set by in many ways:
 
 `print(averages)`
+
 `View(averages)`
+
 `browseURL("averages.txt")`
+
 `View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))`
 
 If you still haven't run the script, you may preview the `averages.txt` [here](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt).

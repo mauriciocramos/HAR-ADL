@@ -1,3 +1,4 @@
+.gitignore
 .Rproj.user
 .Rhistory
 .RData
@@ -13,3 +14,4 @@ UCI HAR Dataset.names
 Dataset.zip
 UCI HAR Dataset
 run_analysis.log
+CLUSTERING EXAMPLE.TXT
