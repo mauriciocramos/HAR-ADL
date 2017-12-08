@@ -8,10 +8,10 @@
 *.pdf
 *.pptx
 *.xlsx
-HAR-analysis.Rproj
 Notepad++Session.xml
 UCI HAR Dataset.names
 Dataset.zip
 UCI HAR Dataset
 run_analysis.log
 CLUSTERING EXAMPLE.TXT
+HAR-ADL-analysis.Rproj

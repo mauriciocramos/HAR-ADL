@@ -1,7 +1,7 @@
 CodeBook
 ================
 by Maurício Collaça
-on 2017-10-10
+on 2017-12-08
 
 This code book modifies and updates the available codebooks with the data to indicate all variables and summaries calculated, units, transformations, work performed to clean up, tidy, process and display of the data and any other relevant information.
 
@@ -138,9 +138,9 @@ One can conclude there are eight 3-axial signals and nine magnitude signals tota
 `fBodyGyroMag`
 `fBodyGyroJerkMag`
 
-The following chart illustrates the feature selection. Click [here](https://github.com/mauriciocramos/HAR-analysis/raw/master/HAR-feature-selection.png) to enlarge.
+The following chart illustrates the feature selection. Click [here](https://github.com/mauriciocramos/HAR-ADL-analysis/raw/master/HAR-ADL-feature-selection.png) to enlarge.
 
-![Feature Selection](HAR-feature-selection.png)
+![Feature Selection](HAR-ADL-feature-selection.png)
 
 ### Feature variables (calculus)
 
@@ -235,7 +235,7 @@ R.Version()[c("version.string", "arch")]
 ```
 
     ## $version.string
-    ## [1] "R version 3.4.2 (2017-09-28)"
+    ## [1] "R version 3.4.3 (2017-11-30)"
     ## 
     ## $arch
     ## [1] "x86_64"
@@ -254,12 +254,12 @@ packageVersion("dplyr")
 packageVersion("tidyr")
 ```
 
-    ## [1] '0.7.1'
+    ## [1] '0.7.2'
 
 Transformations
 ---------------
 
-The [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script was developed to fullfill the following formal requirements of the project:
+The [`run_analysis.R`](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/run_analysis.R) script was developed to fullfill the following formal requirements of the project:
 
 > 1.  Merges the training and the test sets to create one data set.
 > 2.  Extracts only the measurements on the mean and standard deviation for each measurement.
@@ -292,19 +292,19 @@ The `{tidyr}` function `gather()` is used to take multiple columns and collapses
 library(tidyr)
 ```
 
-As mentioned above, in order to encapsulate code and improve the reusability and the readability of the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) script, the file reading helper functions were written in a separate R script called [HAR-utils.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-utils.R).
+As mentioned above, in order to encapsulate code and improve the reusability and the readability of the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/run_analysis.R) script, the file reading helper functions were written in a separate R script called [HAR-ADL-utils.R](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/HAR-ADL-utils.R).
 
-In case you forgot to download the [HAR-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R), the [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/run_analysis.R) will automatically download it for your convenience.
+In case you forgot to download the [HAR-ADL-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-ADL-analysis/master/HAR-ADL-utils.R), the [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-ADL-analysis/master/run_analysis.R) will automatically download it for your convenience.
 
 ``` r
-if(!file.exists("HAR-utils.R"))
-    download.file("https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R",
-                  "HAR-utils.R",
+if(!file.exists("HAR-ADL-utils.R"))
+    download.file("https://raw.githubusercontent.com/mauriciocramos/HAR-ADL-analysis/master/HAR-ADL-utils.R",
+                  "HAR-ADL-utils.R",
                   quiet = TRUE)
-source("HAR-utils.R")
+source("HAR-ADL-utils.R")
 ```
 
-It's not necessary to read the `HAR-utils.R` source code in order to understand the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R).
+It's not necessary to read the `HAR-ADL-utils.R` source code in order to understand the [`run_analysis.R`](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/run_analysis.R).
 
 These functions loads the data set files into R `data.frame` objects:
 
@@ -547,13 +547,13 @@ str(averages)
     ##  $ feature : chr  "fBodyAcc-mean()-X" "fBodyAcc-mean()-Y" "fBodyAcc-mean()-Z" "fBodyAcc-meanFreq()-X" ...
     ##  $ average : num  -0.9391 -0.8671 -0.8827 -0.1588 0.0975 ...
 
-The result is exported to the file [`averages.txt`](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt) in the current working directory
+The result is exported to the file [`averages.txt`](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/averages.txt) in the current working directory
 
 ``` r
 write.table(averages, file = "averages.txt", row.names = FALSE)
 ```
 
-For the peer reviewing of the file [`averages.txt`](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt) one can load it with the following command
+For the peer reviewing of the file [`averages.txt`](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/averages.txt) one can load it with the following command
 
 ``` r
 View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))
@@ -569,7 +569,7 @@ You may check out this data set by in many ways:
 
 `View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))`
 
-If you still haven't run the script, you may preview the `averages.txt` [here](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt).
+If you still haven't run the script, you may preview the `averages.txt` [here](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/averages.txt).
 
 Acknowledgment
 --------------

@@ -1,7 +1,7 @@
 README
 ================
 by Maurício Collaça
-on 2017-10-10
+on 2017-12-08
 
 Getting and Cleaning Data Course Project
 ----------------------------------------
@@ -20,30 +20,30 @@ The data set used in this project is from the University of California Irvine (U
 
 The data set for this project is available at [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) or [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip).
 
-HAR-analysis repository
------------------------
+HAR-ADL-analysis repository
+---------------------------
 
-The [HAR-analysis](https://github.com/mauriciocramos/HAR-analysis) repository includes the following files:
+The [HAR-ADL-analysis](https://github.com/mauriciocramos/HAR-ADL-analysis) repository includes the following files:
 
--   [README.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/README.md) - This README file.
+-   [README.md](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/README.md) - This README file.
 
--   [run\_analysis.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/run_analysis.R) - R script to perform the data downloading, tidying, filtering and averaging required by the project.
+-   [run\_analysis.R](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/run_analysis.R) - R script to perform the data downloading, tidying, filtering and averaging required by the project.
 
--   [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md) - Code book that modifies and updates the available codebooks with the data to indicate all variables and summaries calculated, units, transformations, work performed to clean up, tidy, process and display of the data and any other relevant information.
+-   [CodeBook.md](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/CodeBook.md) - Code book that modifies and updates the available codebooks with the data to indicate all variables and summaries calculated, units, transformations, work performed to clean up, tidy, process and display of the data and any other relevant information.
 
--   [HAR-utils.R](https://github.com/mauriciocramos/HAR-analysis/blob/master/HAR-utils.R) - R script containing file reading helper functions developed to encapsulate code and improve the reusability and the readability of the `run_analysis.R`. It's not necessary to read the `HAR-utils.R` source code in order to understand the `run_analysis.R`.
+-   [HAR-ADL-utils.R](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/HAR-ADL-utils.R) - R script containing file reading helper functions developed to encapsulate code and improve the reusability and the readability of the `run_analysis.R`. It's not necessary to read the `HAR-ADL-utils.R` source code in order to understand the `run_analysis.R`.
 
--   [averages.txt](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt) - A tidy data set output from `run_analysis.R`, containing the the average of each mean and standard deviation variable for each activity and each subject.
+-   [averages.txt](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/averages.txt) - A tidy data set output from `run_analysis.R`, containing the the average of each mean and standard deviation variable for each activity and each subject.
 
 Installation, running and evaluation instructions
 -------------------------------------------------
 
-These are the basic installation, running and evaluation instructions for the project. Please read and follow them carefully to ensure you have everything running properly and after that, read the [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md) for deeper explanations and final evaluation.
+These are the basic installation, running and evaluation instructions for the project. Please read and follow them carefully to ensure you have everything running properly and after that, read the [CodeBook.md](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/CodeBook.md) for deeper explanations and final evaluation.
 
-1.  If you still haven't done it, install R available at [The R Foundation](https://www.r-project.org/). This project used R version 3.4.2 (2017-09-28).
+1.  If you still haven't done it, install R available at [The R Foundation](https://www.r-project.org/). This project used R version 3.4.3 (2017-11-30).
 2.  Optionally, you may use RStudio as well, available at [RStudio](https://www.rstudio.com/). This project used RStudio Desktop version 1.1.383.
-3.  If you still haven't done it, install additional R packages `{dplyr}` and `{tidyr}`. The easiest way to do that is via R (menu Packages &gt; Install Package(s)...) or RStudio (menu Tools &gt; Install packages...). This project used `{dplyr}` version 0.7.4 and `{tidr}` version 0.7.1.
-4.  Download only [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/run_analysis.R) and [HAR-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R) in some local working directory of your preference. The other files (i.e. \*.md files) are not necessary to download for your evaluation as they are rendered by GitHub website. If you download them you would need Rstudio to view/render them in your computer.
+3.  If you still haven't done it, install additional R packages `{dplyr}` and `{tidyr}`. The easiest way to do that is via R (menu Packages &gt; Install Package(s)...) or RStudio (menu Tools &gt; Install packages...). This project used `{dplyr}` version 0.7.4 and `{tidr}` version 0.7.2.
+4.  Download only [run\_analysis.R](https://raw.githubusercontent.com/mauriciocramos/HAR-ADL-analysis/master/run_analysis.R) and [HAR-ADL-utils.R](https://raw.githubusercontent.com/mauriciocramos/HAR-ADL-analysis/master/HAR-ADL-utils.R) in some local working directory of your preference. The other files (i.e. \*.md files) are not necessary to download for your evaluation as they are rendered by GitHub website. If you download them you would need Rstudio to view/render them in your computer.
 5.  Optionally, download the `Dataset.zip` from [Cloudfront](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip) or [UCI](http://archive.ics.uci.edu/ml/machine-learning-databases/00240/UCI%20HAR%20Dataset.zip) in the same local working directory but the script will do that for your convenience.
 6.  Open `R` or `RStudio`
 7.  Go to the directory where the scripts were download using the command `setwd("your-directory-here")`
@@ -118,9 +118,9 @@ You may check out this data set by in many ways:
 
 `View(read.table("averages.txt", header = TRUE, stringsAsFactors = FALSE))`
 
-If you still haven't run the script, you may preview the `averages.txt` [here](https://github.com/mauriciocramos/HAR-analysis/blob/master/averages.txt).
+If you still haven't run the script, you may preview the `averages.txt` [here](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/averages.txt).
 
-I hope you enjoy it and don't forget to checkout the [CodeBook.md](https://github.com/mauriciocramos/HAR-analysis/blob/master/CodeBook.md) for deeper explanations and final evaluation.
+I hope you enjoy it and don't forget to checkout the [CodeBook.md](https://github.com/mauriciocramos/HAR-ADL-analysis/blob/master/CodeBook.md) for deeper explanations and final evaluation.
 
 Acknowledgment
 --------------
