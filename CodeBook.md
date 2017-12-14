@@ -1,7 +1,7 @@
 CodeBook
 ================
 by Maurício Collaça
-on 2017-12-08
+on 2017-12-14
 
 This code book modifies and updates the available codebooks with the data to indicate all variables and summaries calculated, units, transformations, work performed to clean up, tidy, process and display of the data and any other relevant information.
 

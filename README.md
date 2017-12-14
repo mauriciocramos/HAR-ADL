@@ -1,7 +1,7 @@
 README
 ================
 by Maurício Collaça
-on 2017-12-08
+on 2017-12-11
 
 Getting and Cleaning Data Course Project
 ----------------------------------------

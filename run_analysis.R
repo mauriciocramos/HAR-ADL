@@ -6,11 +6,11 @@
 
 library(dplyr)
 library(tidyr)
-if(!file.exists("HAR-utils.R"))
-    download.file("https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-utils.R",
-                  "HAR-utils.R",
+if(!file.exists("HAR-ADL-utils.R"))
+    download.file("https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-ADL-utils.R",
+                  "HAR-ADL-utils.R",
                   quiet = TRUE)
-source("HAR-utils.R")
+source("HAR-ADL-utils.R")
 url <- "https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 destfile = 'Dataset.zip'
 if(!file.exists(destfile)) {

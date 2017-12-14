@@ -1,7 +1,7 @@
 HAR-ADL-analysis
 ================
 by Maurício Collaça
-on 2017-12-08
+on 2017-12-14
 
 Analysis of the Human Activity Recognition (HAR) Using Smartphones Data Set
 ---------------------------------------------------------------------------
