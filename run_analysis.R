@@ -7,7 +7,7 @@
 library(dplyr)
 library(tidyr)
 if(!file.exists("HAR-ADL-utils.R"))
-    download.file("https://raw.githubusercontent.com/mauriciocramos/HAR-analysis/master/HAR-ADL-utils.R",
+    download.file("https://raw.githubusercontent.com/mauriciocramos/HAR-ADL/master/HAR-ADL-utils.R",
                   "HAR-ADL-utils.R",
                   quiet = TRUE)
 source("HAR-ADL-utils.R")

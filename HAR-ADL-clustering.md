@@ -65,19 +65,21 @@ Variance Explained for the first subject: ![](HAR-ADL-clustering_files/figure-ma
 
 Number of features by proportions of Variance Explained
 
-    ##      [,1] [,2] [,3] [,4] [,5] [,6]
-    ## [1,] 0.8  0.85 0.9  0.95 0.99 1   
-    ## [2,] 13   22   37   64   128  347
+    ##      [,1] [,2] [,3] [,4] [,5]
+    ## [1,] 0.8  0.9  0.95 0.99 1   
+    ## [2,] 13   37   64   128  347
 
 **Scatter plot**
 
-Features selected by 85% of the Variance Explained mostly due to average display resolutions about 1920 X 1024 pixels.:
+Features selected by 80% of the Variance Explained mostly due to average display resolutions about 1920 X 1024 pixels.:
 
 ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
 **Activity clusters varying by percentages of the Variance Explained** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-14-1.png)
 
-### Visual analysis of sensor averages in XYZ directions from time and frequency domains from all subjects
+### Feature visual selection
+
+Visually selecting features from sensor averages in XYZ directions from time and frequency domains from all subjects
 
 Initial feature subset:
 
@@ -102,7 +104,7 @@ Revised features subset:
     ## [4] "fBodyAcc.mean...X"     "fBodyAcc.mean...Y"     "fBodyAcc.mean...Z"    
     ## [7] "fBodyAccJerk.mean...X" "fBodyAccJerk.mean...Y" "fBodyAccJerk.mean...Z"
 
-**Activity clusters of the first subject using selected features** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-19-1.png)
+**Activity clusters of the first subject using visually selected features** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-19-1.png)
 
 ### k-means Clustering
 
@@ -110,40 +112,40 @@ With all features, 2 groups and 100 random starts k-means almost correctly class
 
     ##        
     ## cluster laying sitting standing walk walkdown walkup
-    ##       1      5       0        0   95       49     53
-    ##       2     45      47       53    0        0      0
+    ##       1     45      47       53    0        0      0
+    ##       2      5       0        0   95       49     53
 
 With all features, 6 groups and 100 random starts k-means stabilizes and correctly classified walk and walkdown activities.
 
     ##        
     ## cluster laying sitting standing walk walkdown walkup
-    ##       1      3       0        0    0        0     53
-    ##       2     29       0        0    0        0      0
-    ##       3     18      10        2    0        0      0
+    ##       1     29       0        0    0        0      0
+    ##       2     18      10        2    0        0      0
+    ##       3      0       0        0    0       49      0
     ##       4      0      37       51    0        0      0
-    ##       5      0       0        0   95        0      0
-    ##       6      0       0        0    0       49      0
+    ##       5      3       0        0    0        0     53
+    ##       6      0       0        0   95        0      0
 
     ##        
     ## cluster walk walkdown
-    ##       5   95        0
-    ##       6    0       49
+    ##       3    0       49
+    ##       6   95        0
 
 With the Principal Components of SVD, 6 groups and 100 random starts k-means also stabilizes and correctly classified walk and walkdown activities.
 
     ##        
     ## cluster laying sitting standing walk walkdown walkup
-    ##       1      2       0        0    0        0     53
-    ##       2     29       0        0    0        0      0
-    ##       3     19       9        2    0        0      0
-    ##       4      0       0        0    0       49      0
-    ##       5      0       0        0   95        0      0
-    ##       6      0      38       51    0        0      0
+    ##       1      0       0        0    0       49      0
+    ##       2      0      38       51    0        0      0
+    ##       3     29       0        0    0        0      0
+    ##       4     19       9        2    0        0      0
+    ##       5      2       0        0    0        0     53
+    ##       6      0       0        0   95        0      0
 
     ##        
     ## cluster walk walkdown
-    ##       4    0       49
-    ##       5   95        0
+    ##       1    0       49
+    ##       6   95        0
 
 Looking at the features (columns) of these centers to see if any dominate.
 
