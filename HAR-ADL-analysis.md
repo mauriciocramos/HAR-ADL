@@ -1,7 +1,7 @@
 HAR-ADL-analysis
 ================
 by Maurício Collaça
-on 2017-12-14
+on 2017-12-19
 
 Analysis of the Human Activity Recognition (HAR) Using Smartphones Data Set
 ---------------------------------------------------------------------------
@@ -76,7 +76,7 @@ Sys.info()[c("sysname","release")]
 ```
 
     ##   sysname   release 
-    ## "Windows"  "10 x64"
+    ## "Windows" "8.1 x64"
 
 R version:
 

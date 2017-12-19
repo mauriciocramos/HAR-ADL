@@ -35,118 +35,116 @@ names(train[,562:563])
 
 Counting sensor statistics (rows) per subject:
 
-    ## subjects
-    ##   1   3   5   6   7   8  11  14  15  16  17  19  21  22  23  25  26  27 
-    ## 347 341 302 325 308 281 316 323 328 366 368 360 408 321 372 409 392 376 
-    ##  28  29  30 
-    ## 382 344 383
+    subjects
+      1   3   5   6   7   8  11  14  15  16  17  19  21  22  23  25  26  27 
+    347 341 302 325 308 281 316 323 328 366 368 360 408 321 372 409 392 376 
+     28  29  30 
+    382 344 383 
 
 Counting sensor statistics (rows) by Activities.
 
-    ## activities
-    ##   laying  sitting standing     walk walkdown   walkup 
-    ##     1407     1286     1374     1226      986     1073
+    activities
+      laying  sitting standing     walk walkdown   walkup 
+        1407     1286     1374     1226      986     1073 
 
 We have 6 activities, 3 passive (laying, standing and sitting) and 3 active which involve walking.
 
 ### Hypothesis questions
 
-**Is the correlation between the measurements and activities good enough to train a machine?**
+> Is the correlation between the measurements and activities good enough to train a machine?
 
-**Given a set of 561 measurements, would a trained machine be able to determine which of the 6 activities the person was doing?**
+> Given a set of 561 measurements, would a trained machine be able to determine which of the 6 activities the person was doing?
 
-### Activity clusters of the first subject using all features
+To answer these questions it will be focused only on the subject 1.
+
+### Clusters of the 561 features
 
 ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-7-1.png)
 
-### Principal Component Analysis (PCA) from Singular Value Decomposition (SVD)
+### Scatter plots of features by statistics in XYZ axes
 
-Variance Explained for the first subject: ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-8-1.png)
+![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-8-1.png)
 
-Number of features by proportions of Variance Explained
+### Clusters of the features by statistics in XYZ axes
 
-    ##      [,1] [,2] [,3] [,4] [,5]
-    ## [1,] 0.8  0.9  0.95 0.99 1   
-    ## [2,] 13   37   64   128  347
+![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-9-1.png)
 
-**Scatter plot**
+### Final feature selection
 
-Features selected by 80% of the Variance Explained mostly due to average display resolutions about 1920 X 1024 pixels.:
+     [1] "tBodyAcc.max...X"      "tBodyAcc.max...Y"     
+     [3] "tBodyAcc.max...Z"      "tGravityAcc.max...X"  
+     [5] "tGravityAcc.max...Y"   "tGravityAcc.max...Z"  
+     [7] "tBodyAccJerk.max...X"  "tBodyAccJerk.max...Y" 
+     [9] "tBodyAccJerk.max...Z"  "tBodyGyro.max...X"    
+    [11] "tBodyGyro.max...Y"     "tBodyGyro.max...Z"    
+    [13] "tBodyGyroJerk.max...X" "tBodyGyroJerk.max...Y"
+    [15] "tBodyGyroJerk.max...Z" "fBodyAcc.max...X"     
+    [17] "fBodyAcc.max...Y"      "fBodyAcc.max...Z"     
+    [19] "fBodyAccJerk.max...X"  "fBodyAccJerk.max...Y" 
+    [21] "fBodyAccJerk.max...Z"  "fBodyGyro.max...X"    
+    [23] "fBodyGyro.max...Y"     "fBodyGyro.max...Z"    
 
-![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-13-1.png)
+**Clusters of the selected 24 features** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-11-1.png)
 
-**Activity clusters varying by percentages of the Variance Explained** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-14-1.png)
+### Singular Value Decomposition
 
-### Feature visual selection
+**Biplot of Principal Components** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-12-1.png)
 
-Visually selecting features from sensor averages in XYZ directions from time and frequency domains from all subjects
+**Variance Explained** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-13-1.png)
 
-Initial feature subset:
+**Number of Principal Components by cumulative proportions of Variance Explained**
 
-    ##  [1] "tBodyAcc.mean...X"      "tBodyAcc.mean...Y"     
-    ##  [3] "tBodyAcc.mean...Z"      "tGravityAcc.mean...X"  
-    ##  [5] "tGravityAcc.mean...Y"   "tGravityAcc.mean...Z"  
-    ##  [7] "tBodyAccJerk.mean...X"  "tBodyAccJerk.mean...Y" 
-    ##  [9] "tBodyAccJerk.mean...Z"  "tBodyGyro.mean...X"    
-    ## [11] "tBodyGyro.mean...Y"     "tBodyGyro.mean...Z"    
-    ## [13] "tBodyGyroJerk.mean...X" "tBodyGyroJerk.mean...Y"
-    ## [15] "tBodyGyroJerk.mean...Z" "fBodyAcc.mean...X"     
-    ## [17] "fBodyAcc.mean...Y"      "fBodyAcc.mean...Z"     
-    ## [19] "fBodyAccJerk.mean...X"  "fBodyAccJerk.mean...Y" 
-    ## [21] "fBodyAccJerk.mean...Z"  "fBodyGyro.mean...X"    
-    ## [23] "fBodyGyro.mean...Y"     "fBodyGyro.mean...Z"
+                          [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+    Cumulative proportion 0.6  0.65 0.7  0.75 0.8  0.85 0.9  0.95 0.99 1    
+    Principal Components  1    2    4    7    13   22   37   64   128  347  
 
-**Scatter plots** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-17-1.png)
+**Scatter plots of the main contributors of each Principal Components of the 80% variance explained**
 
-Revised features subset:
+![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-16-1.png)
 
-    ## [1] "tGravityAcc.mean...X"  "tGravityAcc.mean...Y"  "tGravityAcc.mean...Z" 
-    ## [4] "fBodyAcc.mean...X"     "fBodyAcc.mean...Y"     "fBodyAcc.mean...Z"    
-    ## [7] "fBodyAccJerk.mean...X" "fBodyAccJerk.mean...Y" "fBodyAccJerk.mean...Z"
-
-**Activity clusters of the first subject using visually selected features** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-19-1.png)
+**Clusters of the main contributors of each 13 Principal Components of the 80% variance explained** ![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-17-1.png)
 
 ### k-means Clustering
 
 With all features, 2 groups and 100 random starts k-means almost correctly classified between walking and non-walking activities.
 
-    ##        
-    ## cluster laying sitting standing walk walkdown walkup
-    ##       1     45      47       53    0        0      0
-    ##       2      5       0        0   95       49     53
+           
+    cluster laying sitting standing walk walkdown walkup
+          1      5       0        0   95       49     53
+          2     45      47       53    0        0      0
 
 With all features, 6 groups and 100 random starts k-means stabilizes and correctly classified walk and walkdown activities.
 
-    ##        
-    ## cluster laying sitting standing walk walkdown walkup
-    ##       1     29       0        0    0        0      0
-    ##       2     18      10        2    0        0      0
-    ##       3      0       0        0    0       49      0
-    ##       4      0      37       51    0        0      0
-    ##       5      3       0        0    0        0     53
-    ##       6      0       0        0   95        0      0
+           
+    cluster laying sitting standing walk walkdown walkup
+          1     29       0        0    0        0      0
+          2      0       0        0    0       49      0
+          3     18      10        2    0        0      0
+          4      3       0        0    0        0     53
+          5      0      37       51    0        0      0
+          6      0       0        0   95        0      0
 
-    ##        
-    ## cluster walk walkdown
-    ##       3    0       49
-    ##       6   95        0
+           
+    cluster walk walkdown
+          2    0       49
+          6   95        0
 
 With the Principal Components of SVD, 6 groups and 100 random starts k-means also stabilizes and correctly classified walk and walkdown activities.
 
-    ##        
-    ## cluster laying sitting standing walk walkdown walkup
-    ##       1      0       0        0    0       49      0
-    ##       2      0      38       51    0        0      0
-    ##       3     29       0        0    0        0      0
-    ##       4     19       9        2    0        0      0
-    ##       5      2       0        0    0        0     53
-    ##       6      0       0        0   95        0      0
+           
+    cluster laying sitting standing walk walkdown walkup
+          1     29       0        0    0        0      0
+          2     19       9        2    0        0      0
+          3      0      38       51    0        0      0
+          4      0       0        0   95        0      0
+          5      2       0        0    0        0     53
+          6      0       0        0    0       49      0
 
-    ##        
-    ## cluster walk walkdown
-    ##       1    0       49
-    ##       6   95        0
+           
+    cluster walk walkdown
+          4   95        0
+          6    0       49
 
 Looking at the features (columns) of these centers to see if any dominate.
 
-![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-24-1.png)
+![](HAR-ADL-clustering_files/figure-markdown_github/unnamed-chunk-22-1.png)
