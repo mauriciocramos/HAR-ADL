@@ -117,33 +117,33 @@ With all features, 6 groups and 100 random starts k-means stabilizes and correct
 
            
     cluster laying sitting standing walk walkdown walkup
-          1     29       0        0    0        0      0
-          2      0       0        0    0       49      0
-          3     18      10        2    0        0      0
-          4      3       0        0    0        0     53
-          5      0      37       51    0        0      0
-          6      0       0        0   95        0      0
+          1      0      37       51    0        0      0
+          2      3       0        0    0        0     53
+          3      0       0        0   95        0      0
+          4     29       0        0    0        0      0
+          5     18      10        2    0        0      0
+          6      0       0        0    0       49      0
 
            
     cluster walk walkdown
-          2    0       49
-          6   95        0
+          3   95        0
+          6    0       49
 
 With the Principal Components of SVD, 6 groups and 100 random starts k-means also stabilizes and correctly classified walk and walkdown activities.
 
            
     cluster laying sitting standing walk walkdown walkup
-          1     29       0        0    0        0      0
-          2     19       9        2    0        0      0
-          3      0      38       51    0        0      0
-          4      0       0        0   95        0      0
-          5      2       0        0    0        0     53
-          6      0       0        0    0       49      0
+          1      0       0        0    0       49      0
+          2      2       0        0    0        0     53
+          3     29       0        0    0        0      0
+          4      0      38       51    0        0      0
+          5      0       0        0   95        0      0
+          6     19       9        2    0        0      0
 
            
     cluster walk walkdown
-          4   95        0
-          6    0       49
+          1    0       49
+          5   95        0
 
 Looking at the features (columns) of these centers to see if any dominate.
 
